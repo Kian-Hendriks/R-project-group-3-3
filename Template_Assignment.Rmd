@@ -21,7 +21,7 @@ require(yaml)
 
 # Title Page
 
-Include your names
+Vincent, Joris, Vincent, Thies, Kian & Julius 
 
 Include the tutorial group number
 
