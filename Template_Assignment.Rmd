@@ -50,12 +50,12 @@ Preferably from a URL, but if not, make sure to download the data and store it i
 
 #hoge_veerkracht_2024 <- #read.csv("C:/Users/vince/Downloads/hoge-veerkracht-2024.csv", header=FALSE, sep=";")
 
-#Prijzen_bestaande_koopwoningen <- 
-#read.csv2("~/Downloads/Prijzen bestaande koopwoningen.csv", header=FALSE)
-
-write.csv(Prijzen_bestaande_koopwoningen, "data/woningprijs.csv")
-
 write.csv(hoge_veerkracht_2024, "data/veerkracht2024.csv")
+
+#Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030 <- read.csv("C:/Users/vince/Downloads/Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030.csv", header=FALSE, sep=";")
+
+write.csv(inkomen_van_huishouden_per_regio, "data/inkomenperregio.csv")
+
 ```
 
 midwest is an example dataset included in the tidyverse package
