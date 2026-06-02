@@ -55,7 +55,7 @@ write.csv(hoge_veerkracht_2024, "data/veerkracht2024.csv")
 
 #Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030 <- #read.csv("C:/Users/vince/Downloads/Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030.csv", header=FALSE, sep=";")
 
-write.csv(Inkomen_per_regio, "data/inkomenperregio.csv")
+write.csv(Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030, "data/inkomenperregio.csv")
 
 midwest is an example dataset included in the tidyverse package
 
