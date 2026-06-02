@@ -23,9 +23,9 @@ require(yaml)
 
 Vincent, Joris, Vincent, Thies, Kian & Julius 
 
-Include the tutorial group number
+Tutorial group 3.3 
 
-Include your tutorial lecturer's name
+C. Schouwenaar
 
 # Part 1 - Identify a Social Problem
 
