@@ -29,6 +29,7 @@ C. Schouwenaar
 
 # Part 1 - Identify a Social Problem
 
+
 Use APA referencing throughout your document. [Here's a link to some explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
 
 ## 1.1 Describe the Social Problem
@@ -51,6 +52,7 @@ Preferably from a URL, but if not, make sure to download the data and store it i
 #hoge_veerkracht_2024 <- #read.csv("C:/Users/vince/Downloads/hoge-veerkracht-2024.csv", header=FALSE, sep=";")
 
 write.csv(hoge_veerkracht_2024, "data/veerkracht2024.csv")
+
 ```
 
 midwest is an example dataset included in the tidyverse package
