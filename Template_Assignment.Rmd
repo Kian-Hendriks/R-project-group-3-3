@@ -155,7 +155,7 @@ Here you provide a description of why the plot above is relevant to your specifi
 
 ## 5.1 Github repository link
 
-Provide the link to your PUBLIC repository here: ...
+Provide the to your PUBLIC repository here: ...
 
 ## 5.2 Reference list
 
