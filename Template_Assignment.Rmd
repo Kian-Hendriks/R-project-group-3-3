@@ -21,6 +21,7 @@ require(yaml)
 ```
 
 # Title Page
+Regional Income Growth and House Price Dynamics in the Netherlands
 
 Vincent, Joris, Vincent, Thies, Kian & Julius 
 
