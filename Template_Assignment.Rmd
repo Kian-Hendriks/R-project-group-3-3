@@ -63,7 +63,6 @@ write.csv(hoge_veerkracht_2024, "data/veerkracht2024.csv")
 write.csv(Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030, "data/inkomenperregio.csv")
 
 <<<<<<< HEAD
-inkomenperregio <- inkomenperregio[1:(nrow(inkomenperregio)-4), ]
 =======
 #Bestaande_koopwoningen <- #read.csv("Bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630", header = FALSE, sep=",")
 
@@ -74,6 +73,7 @@ write.csv(estaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630,
  midwest is an example dataset included in the tidyverse package
 =======
 
+inkomenperregio <- inkomenperregio[1:(nrow(inkomenperregio)-4), ]
 
 midwest is an example dataset included in the tidyverse package
 >>>>>>> bdbc7d74703b84c02c3eae73a71647a33714c1d8
