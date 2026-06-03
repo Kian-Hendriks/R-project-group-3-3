@@ -88,28 +88,50 @@ write.csv(X2017, "data/data2017.csv")
 
 #data_2018 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2018.csv", header=FALSE, sep=";")
 
-write.csv(data_2018, "data/2018.csv")
+write.csv(X2018, "data/data2018.csv")
 
 #data_2019 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2019.csv", header=FALSE, sep=";")
 
-write.csv(data_2019, "data/2019.csv")
+write.csv(X2019, "data/data2019.csv")
 
 #data_2020 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2020.csv", header=FALSE, sep=";")
 
-write.csv(data_2020, "data/2020.csv")
+write.csv(X2020, "data/data2020.csv")
 
 #data_2021 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2021.csv", header=FALSE, sep=";")
 
-write.csv(data_2021, "data/2021.csv")
+write.csv(X2021, "data/data2021.csv")
 
 #data_2022 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2022.csv", header=FALSE, sep=";")
 
-write.csv(data_2022, "data/2022.csv")
+write.csv(X2022, "data/data2022.csv")
 
 #data_2023 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2023.csv", header=FALSE, sep=";")
 
-write.csv(data_2023, "data/2023.csv")
+write.csv(X2023, "data/data2023.csv")
 
+```
+
+## joining
+
+```{r}
+data2015 <- read_csv("data/data2015.csv")
+data2015$jaar <- 2015
+data2016 <- read_csv("data/data2016.csv")
+data2016$jaar <- 2016
+
+data1516 <- rbind(data2015, data2016)
+
+data2017 <- read_csv("data/data2017.csv")
+data2017$jaar <- 2017
+data2018 <- read_csv("data/data2018.csv")
+data2018$jaar <- 2018
+
+data1718 <- rbind(data2017, data2018)
+
+Data15161718 <- rbind(data1516, data1718)
+
+write.csv(Data15161718, "data/data15161718.csv")
 ```
 
 
