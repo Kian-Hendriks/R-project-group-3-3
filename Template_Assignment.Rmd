@@ -1,4 +1,5 @@
 ---
+title: "Template"
 title: "Regional Income Growth and House Price Dynamics in the Netherlands"
 author: "Studentnames and studentnumbers here"
 date: "`r Sys.Date()`"
@@ -31,6 +32,7 @@ C. Schouwenaar
 # Part 1 - Identify a Social Problem
 
 
+
 Use APA referencing throughout your document. [Here's a link to some explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
 
 ## 1.1 Describe the Social Problem
@@ -48,6 +50,8 @@ Include the following:
 Preferably from a URL, but if not, make sure to download the data and store it in a shared location that you can load the data in from. Do not store the data in a folder you include in the Github repository!
 
 ```{r loading_data}
+dataset <- midwest
+```
 #dataset <- midwest
 
 #hoge_veerkracht_2024 <- #read.csv("C:/Users/vince/Downloads/hoge-veerkracht-2024.csv", header=FALSE, sep=",")
@@ -58,7 +62,13 @@ write.csv(hoge_veerkracht_2024, "data/veerkracht2024.csv")
 
 write.csv(Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030, "data/inkomenperregio.csv")
 
+<<<<<<< HEAD
 inkomenperregio <- inkomenperregio[1:(nrow(inkomenperregio)-4), ]
+=======
+#Bestaande_koopwoningen <- #read.csv("Bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630", header = FALSE, sep=",")
+
+write.csv(estaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630, "data/bestaande koopwoningen.csv")
+>>>>>>> aa58531b97baaa294028804c92f44f413d5b2bce
 
 <<<<<<< HEAD
  midwest is an example dataset included in the tidyverse package
