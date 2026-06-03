@@ -112,6 +112,28 @@ write.csv(X2023, "data/data2023.csv")
 
 ```
 
+## joining
+
+```{r}
+data2015 <- read_csv("data/data2015.csv")
+data2015$jaar <- 2015
+data2016 <- read_csv("data/data2016.csv")
+data2016$jaar <- 2016
+
+data1516 <- rbind(data2015, data2016)
+
+data2017 <- read_csv("data/data2017.csv")
+data2017$jaar <- 2017
+data2018 <- read_csv("data/data2018.csv")
+data2018$jaar <- 2018
+
+data1718 <- rbind(data2017, data2018)
+
+Data15161718 <- rbind(data1516, data1718)
+
+write.csv(Data15161718, "data/data15161718.csv")
+```
+
 
 >>>>>>> aa58531b97baaa294028804c92f44f413d5b2bce
 >>>>>>> bac2c3c337e512b99b18e5db5831cf373552a9ab
