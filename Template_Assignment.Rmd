@@ -66,7 +66,7 @@ write.csv(Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__0
 =======
 #Bestaande_koopwoningen <- #read.csv("Bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630", header = FALSE, sep=",")
 
-write.csv(estaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630, "data/bestaande koopwoningen.csv")
+write.csv(bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630, "data/bestaande koopwoningen.csv")
 >>>>>>> aa58531b97baaa294028804c92f44f413d5b2bce
 
 <<<<<<< HEAD
@@ -74,6 +74,7 @@ write.csv(estaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630,
 =======
 
 head(table_86004NED.csv)
+nrow(table_86004NED.csv)
 nrow(table_86004NED.csv)
 
 table_86004NED.csv <- table_86004NED.csv[1:(nrow(table_86004NED.csv)-4), ]
