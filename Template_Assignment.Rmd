@@ -73,7 +73,7 @@ write.csv(estaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630,
  midwest is an example dataset included in the tidyverse package
 =======
 
-inkomenperregio <- inkomenperregio[1:(nrow(inkomenperregio)-4), ]
+table_86004NED.csv <- table_86004NED.csv[1:(nrow(table_86004NED.csv)-4), ]
 
 midwest is an example dataset included in the tidyverse package
 >>>>>>> bdbc7d74703b84c02c3eae73a71647a33714c1d8
