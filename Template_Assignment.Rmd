@@ -57,9 +57,11 @@ write.csv(hoge_veerkracht_2024, "data/veerkracht2024.csv")
 
 write.csv(Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030, "data/inkomenperregio.csv")
 
+
+
 midwest is an example dataset included in the tidyverse package
 
-## 2.2 Provide a short summary of the dataset(s)
+# 2.2 Provide a short summary of the dataset(s)
 
 ```{r}
 head(dataset)
