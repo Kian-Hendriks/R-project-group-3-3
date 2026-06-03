@@ -62,21 +62,24 @@ write.csv(Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__0
 
 <<<<<<< HEAD
 =======
+
+```{r}
+
 #Bestaande_koopwoningen <- #read.csv("Bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630", header = FALSE, sep=",")
 
-write.csv(bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630, "data/bestaande koopwoningen.csv")
+#write.csv(bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630, "data/bestaande koopwoningen.csv")
 
 #data_2015 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2015.csv", header=FALSE, sep=";")
 
-write.csv(data_2015, "data/2015.csv")
+write.csv(X2015, "data/data2015.csv")
 
 #data_2016 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2016.csv", header=FALSE, sep=";")
 
-write.csv(data_2016, "data/2016.csv")
+write.csv(X2016, "data/data2016.csv")
 
 #data_2017 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2017.csv", header=FALSE, sep=";")
 
-write.csv(data_2017, "data/2017.csv")
+write.csv(X2017, "data/data2017.csv")
 
 #data_2018 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2018.csv", header=FALSE, sep=";")
 
@@ -101,6 +104,9 @@ write.csv(data_2022, "data/2022.csv")
 #data_2023 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2023.csv", header=FALSE, sep=";")
 
 write.csv(data_2023, "data/2023.csv")
+
+```
+
 
 >>>>>>> aa58531b97baaa294028804c92f44f413d5b2bce
 
