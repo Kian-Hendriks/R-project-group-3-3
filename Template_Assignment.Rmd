@@ -31,8 +31,6 @@ C. Schouwenaar
 
 # Part 1 - Identify a Social Problem
 
-
-
 Use APA referencing throughout your document. [Here's a link to some explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
 
 ## 1.1 Describe the Social Problem
@@ -62,9 +60,39 @@ Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_16
 
 write.csv(Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030, "data/inkomenperregio.csv")
 
+<<<<<<< HEAD
 Bestaande_koopwoningen <- #read.csv("Bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630", header = FALSE, sep=",")
 
 write.csv(bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630, "data/bestaande koopwoningen.csv")
+=======
+<<<<<<< HEAD
+=======
+#Bestaande_koopwoningen <- #read.csv("Bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630", header = FALSE, sep=",")
+
+write.csv(bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630, "data/bestaande koopwoningen.csv")
+
+#data_2015 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2015.csv", header=FALSE, sep=";")
+#data_2016 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2016.csv", header=FALSE, sep=";")
+#data_2017 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2017.csv", header=FALSE, sep=";")
+#data_2018 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2018.csv", header=FALSE, sep=";")
+#data_2019 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2019.csv", header=FALSE, sep=";")
+#data_2020 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2020.csv", header=FALSE, sep=";")
+#data_2021 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2021.csv", header=FALSE, sep=";")
+#data_2022 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2022.csv", header=FALSE, sep=";")
+#data_2023 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2023.csv", header=FALSE, sep=";")
+
+write.csv(data_2015, "data/2015.csv")
+write.csv(data_2016, "data/2016.csv")
+write.csv(data_2017, "data/2017.csv")
+write.csv(data_2018, "data/2018.csv")
+write.csv(data_2019, "data/2019.csv")
+write.csv(data_2020, "data/2020.csv")
+write.csv(data_2021, "data/2021.csv")
+write.csv(data_2022, "data/2022.csv")
+write.csv(data_2023, "data/2023.csv")
+
+>>>>>>> aa58531b97baaa294028804c92f44f413d5b2bce
+>>>>>>> bac2c3c337e512b99b18e5db5831cf373552a9ab
 
 gemiddelde_inkomens <- #read.csv("inkomen_gemiddeld_", header = FALSE, sep",")
 
@@ -73,6 +101,11 @@ write.csv(inkomen_gemiddeld_, "data/inkomen_gemiddeld_)
  midwest is an example dataset included in the tidyverse package
 =======
 
+head(table_86004NED.csv)
+nrow(table_86004NED.csv)
+nrow(table_86004NED.csv)
+
+table_86004NED.csv <- table_86004NED.csv[1:(nrow(table_86004NED.csv)-4), ]
 
 midwest is an example dataset included in the tidyverse package
 >>>>>>> bdbc7d74703b84c02c3eae73a71647a33714c1d8
