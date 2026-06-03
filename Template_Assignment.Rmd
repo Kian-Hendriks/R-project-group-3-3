@@ -49,11 +49,11 @@ Preferably from a URL, but if not, make sure to download the data and store it i
 ```{r loading_data}
 #dataset <- midwest
 
-#hoge_veerkracht_2024 <- #read.csv("C:/Users/vince/Downloads/hoge-veerkracht-2024.csv", header=FALSE, sep=";")
+#hoge_veerkracht_2024 <- #read.csv("C:/Users/vince/Downloads/hoge-veerkracht-2024.csv", header=FALSE, sep=",")
 
 write.csv(hoge_veerkracht_2024, "data/veerkracht2024.csv")
 
-#Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030 <- #read.csv("C:/Users/vince/Downloads/Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030.csv", header=FALSE, sep=";")
+#Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030 <- #read.csv("C:/Users/vince/Downloads/Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030.csv", header=FALSE, sep=",")
 
 write.csv(Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030, "data/inkomenperregio.csv")
 
