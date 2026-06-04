@@ -245,11 +245,31 @@ datacombi1523 <- datacombi1523[datacombi1523$Regio.s != "Bron: CBS", ]
 ```
 
 
+```{r}
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...6"] <- "gem_st_inkomen_x_100"
 
-Say we want to include only larger distances (above 2) in our dataset, we can filter for this.
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...7"] <- "med_st_inkomen_x_100"
 
-```{r data_cleaning}
-mean(dataset$percollege)
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...8"] <- "gem_bstb_inkomen_x_100"
+
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
+
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
+
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "Regio.s"] <- "Provincies"
+
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "`nr_huishoudens"] <- "ant_hh_p_provincie"
+
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X"] <- "Provincie_nr"
+
+
+saveRDS(datacombined15tot23goed, "goede data/datacombined15tot23goed.rds")
+
+datacombined15tot23goed$X. <- NULL
+datacombined15tot23goed$...1 <- NULL
+
+
+
 ```
 
 Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
