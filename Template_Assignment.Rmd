@@ -158,7 +158,7 @@ write.csv(Data15161718, "data/data15161718.csv")
 
 datacombined15tot23 <- rbind(Data15161718, data2019, data2020, data2021, data2022, data2023)
 
-write.csv(datacombined15tot23, "data/datacombined15tot23")
+write.csv(datacombined15tot23, "data/datacombined15tot23.csv")
 
 ```
 
