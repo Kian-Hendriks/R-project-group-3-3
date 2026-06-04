@@ -169,6 +169,8 @@ datacombined15tot23 <- rbind(datacombined15tot23, nieuwe_rij)
 
 saveRDS(datacombined15tot23, "goede data/datacombi1523.rds")
 
+write.csv(datacombi1523, "Goede data/datacombined15tot23goed.csv")
+
 ```
 
 
