@@ -216,6 +216,10 @@ Think of things like:
 # Part 3 - Quantifying
 
 ## 3.1 Data cleaning
+```{r}
+names(datacombined15tot23)[names(datacombined15tot23) == "X1.000.euro...6"] <- "gem_st_inkomen_x_100"
+```
+
 
 Say we want to include only larger distances (above 2) in our dataset, we can filter for this.
 
