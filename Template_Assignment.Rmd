@@ -160,6 +160,11 @@ datacombined15tot23 <- rbind(Data15161718, data2019, data2020, data2021, data202
 
 write.csv(datacombined15tot23, "data/datacombined15tot23.csv")
 
+datacombined15tot23 <- datacombined15tot23[datacombined15tot23$X != 13, ]
+
+<- data.frame(X = 13, Regio.s = "Bron: CBS", x.1.000 = NA, X. = NA)
+datacombined15tot23 <- rbind(datacombined15tot23, nieuwe_rij)
+
 ```
 
 
