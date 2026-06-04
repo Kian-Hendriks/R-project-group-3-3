@@ -227,8 +227,6 @@ names(datacombined15tot23)[names(datacombined15tot23) == "X1.000.euro...8"] <- "
 
 names(datacombined15tot23)[names(datacombined15tot23) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
 
-
-
 saveRDS(datacombined15tot23, "goede data/datacombi1523.rds")
 ```
 
