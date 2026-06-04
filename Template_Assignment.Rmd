@@ -65,7 +65,7 @@ Bestaande_koopwoningen <- #read.csv("Bestaande_koopwoningen_gemiddelde_verkooppr
 
 write.csv(bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630, "data/bestaande koopwoningen.csv")
 =======
-<<<<<<< HEAD
+ <<<<<<< HEAD
 =======
 
 ```{r}
