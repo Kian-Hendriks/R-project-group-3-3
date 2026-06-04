@@ -218,33 +218,7 @@ Think of things like:
 # Part 3 - Quantifying
 
 ## 3.1 Data cleaning
-```{r}
-names(datacombi1523)[names(datacombi1523) == "X1.000.euro...6"] <- "gem_st_inkomen_x_100"
-
-names(datacombi1523)[names(datacombi1523) == "X1.000.euro...7"] <- "med_st_inkomen_x_100"
-
-names(datacombi1523)[names(datacombi1523) == "X1.000.euro...8"] <- "gem_bstb_inkomen_x_100"
-
-names(datacombi1523)[names(datacombi1523) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
-
-names(datacombi1523)[names(datacombi1523) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
-
-names(datacombi1523)[names(datacombi1523) == "Provincie_nmr"] <- "Provincie_nr"
-names(datacombi1523)[names(datacombi1523) == "Provincie_nr.1"] <- "ant_huis_x_100"
-
-
-
-saveRDS(datacombi1523, "goede data/datacombi1523.rds")
-
-datacombi1523$X. <- NULL
-
-
-datacombi1523 <- datacombi1523[datacombi1523$Regio.s != "Bron: CBS", ]
-
-
-```
-
-
+Data cleaning codering datacombined15tot23goed.
 ```{r}
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...6"] <- "gem_st_inkomen_x_100"
 
@@ -267,8 +241,6 @@ saveRDS(datacombined15tot23goed, "goede data/datacombined15tot23goed.rds")
 
 datacombined15tot23goed$X. <- NULL
 datacombined15tot23goed$...1 <- NULL
-
-
 
 ```
 
