@@ -23,7 +23,7 @@ require(yaml)
 
 # Regional Income Growth and House Price Dynamics in the Netherlands
 
-Vincent, Joris, Vincent, Thies, Kian & Julius 
+Vincent, Joris, Vincent, Thies, Kian & Julius
 
 Tutorial group 3.3 
 
