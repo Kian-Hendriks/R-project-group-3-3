@@ -113,6 +113,13 @@ write.csv(X2023, "data/data2023.csv")
 
 ```
 
+```{r}
+#prijswoningen <- read.csv(C:\Uni\Year 1\Period 6\Programming for Economics/gem_prijs_woning_prov)
+
+write.csv(Gem_prijs_woning_prov, "goede data/woningprijsprov.csv")
+```
+
+
 ## joining
 
 ```{r}
@@ -225,11 +232,17 @@ names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...
 
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...7"] <- "med_st_inkomen_x_100"
 
+<<<<<<< HEAD
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...8"] <- "gem_bstb_inkomen_x_100"
+  
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
+=======
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...8"] <- "gem_bstb_inkomen_x_100"
 
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
+>>>>>>> c6518e6db0c39fa1f561bcda18b5c97d5399a3c5
 
-names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_1000"
 
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "Regio.s"] <- "Provincies"
 
@@ -244,6 +257,26 @@ datacombined15tot23goed$X. <- NULL
 datacombined15tot23goed$...1 <- NULL
 
 ```
+Data cleaning codering woningprijsprov
+```{r}
+woningprijsprov$`1995` <- format(woningprijsprov$`1995`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2000` <- format(woningprijsprov$`2000`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2005` <- format(woningprijsprov$`2005`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2010` <- format(woningprijsprov$`2010`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2015` <- format(woningprijsprov$`2015`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2020` <- format(woningprijsprov$`2020`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2021` <- format(woningprijsprov$`2021`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2022` <- format(woningprijsprov$`2022`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2023` <- format(woningprijsprov$`2023`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2024` <- format(woningprijsprov$`2024`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2025` <- format(woningprijsprov$`2025`, big.mark = ".", scientific = FALSE)
+
+saveRDS(woningprijsprov, "goede data/gem_huizenprijs_per_provincie.RDS")
+
+write.csv(gem_huizenprijs_per_provincie, "goede data/gem_huizen_per_provincie_goed.csv")
+
+```
+
 
 Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
 
