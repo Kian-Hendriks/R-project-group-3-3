@@ -273,10 +273,10 @@ woningprijsprov$`2025` <- format(woningprijsprov$`2025`, big.mark = ".", scienti
 
 saveRDS(woningprijsprov, "goede data/gem_huizenprijs_per_provincie.RDS")
 
-write.csv(gem_huizenprijs_per_provincie, "goede data/gem_huizen_per_provincie_goed.csv")
+write.csv(gem_huizenprijs_per_provincie, "goede data/gem_huizen-per_provincie_goed.csv")
 
 ```
-
+saveRDS(woningprijsprov, "goede data/gem_huizenprijs_per_provincie.RDS")
 
 Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
 
