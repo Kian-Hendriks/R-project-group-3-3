@@ -270,13 +270,14 @@ woningprijsprov$`2022` <- format(woningprijsprov$`2022`, big.mark = ".", scienti
 woningprijsprov$`2023` <- format(woningprijsprov$`2023`, big.mark = ".", scientific = FALSE)
 woningprijsprov$`2024` <- format(woningprijsprov$`2024`, big.mark = ".", scientific = FALSE)
 woningprijsprov$`2025` <- format(woningprijsprov$`2025`, big.mark = ".", scientific = FALSE)
+woningprijsprov$...1 <- NULL
 
 saveRDS(woningprijsprov, "goede data/gem_huizenprijs_per_provincie.RDS")
-
-write.csv(gem_huizenprijs_per_provincie, "goede data/gem_huizen-per_provincie_goed.csv")
-
 ```
-saveRDS(woningprijsprov, "goede data/gem_huizenprijs_per_provincie.RDS")
+
+```{r}
+write.csv(gem_huizenprijs_per_provincie, "goede data/goedehuizenprijsenperprov.csv", row.names = FALSE)
+```
 
 Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
 
