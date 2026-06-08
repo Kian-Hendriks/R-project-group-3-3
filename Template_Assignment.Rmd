@@ -36,11 +36,12 @@ Use APA referencing throughout your document. [Here's a link to some explanation
 
 ## 1.1 Describe the Social Problem
 
-Include the following:
+The Dutch housing market has been under pressure for several years now. Between 2013 and 2023 the average price of houses has more than doubled, while the income growth in the same period considerably lagged behind. The increasing gap between housing costs and purchasing power is not only an economic phenomenon, but also a social problem; it determines who does have access to a stable living situation and who doesn’t.
 
--   Why is this relevant?
+It’s striking that this development differs significantly across regions in the Netherlands. In the Randstad, prices increased much more than in the peripheral regions like Groningen or Zeeland, while the income development per region differs significantly too. Factors such as access to big employers, education level and local economic structure play an important role in this shift. And it is because of this regional variety that it’s interesting to investigate the relation between income and house prices. 
 
--   ...
+This project investigates the relationship between regional income growth and house price dynamics in Dutch provinces, based on CBS-data and the programming tool R. The goal is to discover in which regions the housing market detached most from the local income development.
+
 
 # Part 2 - Data Sourcing
 
@@ -232,15 +233,13 @@ names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...
 
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...7"] <- "med_st_inkomen_x_100"
 
- HEAD
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...8"] <- "gem_bstb_inkomen_x_100"
   
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
-=======
+
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...8"] <- "gem_bstb_inkomen_x_100"
 
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
->>>>>>> c6518e6db0c39fa1f561bcda18b5c97d5399a3c5
 
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_1000"
 
@@ -252,6 +251,8 @@ names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X"] <- "Provin
 
 
 saveRDS(datacombined15tot23goed, "goede data/datacombined15tot23goed.rds")
+
+datacombined15tot23goed <- datacombined15tot23goed[datacombined15tot23goed$Provincies != "Bron: CBS", ]
 
 datacombined15tot23goed$X. <- NULL
 datacombined15tot23goed$...1 <- NULL
@@ -284,9 +285,19 @@ Please use a separate 'R block' of code for each type of cleaning. So, e.g. one 
 ## 3.2 Generate necessary variables
 
 Variable 1
+maken van nieuwe variabele 1, we hebben hier het gemiddelde besteetbare inkomen van iedere provincie over 8 jaar. aldus het gemiddeld
 
 ```{r gen_var1}
 
+gem_inkomen_provincie <- aggregate(gem_bstb_inkomen_x_100 ~ Provincies, 
+                                    data = datacombined15tot23goed, 
+                                    FUN = mean)
+
+write.csv(gem_inkomen_provincie, "goede data/gem_inkomen_provincie.csv", row.names = FALSE)
+
+colnames(gem_inkomen_provincie)[colnames(gem_inkomen_provincie) == "gem_bstb_inkomen_x_100"] <- "gem_bstb_inkomen_per_jaar_x_100"
+
+write.csv(gem_inkomen_provincie, "goede data/gem_inkomen_provincie.csv", row.names = FALSE)
 ```
 
 Variable 2
