@@ -272,6 +272,8 @@ woningprijsprov$`2024` <- format(woningprijsprov$`2024`, big.mark = ".", scienti
 woningprijsprov$`2025` <- format(woningprijsprov$`2025`, big.mark = ".", scientific = FALSE)
 saveRDS(woningprijsprov, "goede data/gem_huizenprijs_per_provincie.RDS")
 
+write.csv(gem_huizenprijs_per_provincie, "goede data/gem_huizen_per_provincie_goed.csv")
+
 ```
 
 
