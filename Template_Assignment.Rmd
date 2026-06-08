@@ -233,15 +233,13 @@ names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...
 
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...7"] <- "med_st_inkomen_x_100"
 
- HEAD
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...8"] <- "gem_bstb_inkomen_x_100"
   
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
-=======
+
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...8"] <- "gem_bstb_inkomen_x_100"
 
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
->>>>>>> c6518e6db0c39fa1f561bcda18b5c97d5399a3c5
 
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_1000"
 
@@ -253,6 +251,8 @@ names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X"] <- "Provin
 
 
 saveRDS(datacombined15tot23goed, "goede data/datacombined15tot23goed.rds")
+
+datacombined15tot23goed <- datacombined15tot23goed[datacombined15tot23goed$Provincies != "Bron: CBS", ]
 
 datacombined15tot23goed$X. <- NULL
 datacombined15tot23goed$...1 <- NULL
@@ -284,9 +284,19 @@ Please use a separate 'R block' of code for each type of cleaning. So, e.g. one 
 ## 3.2 Generate necessary variables
 
 Variable 1
+maken van nieuwe variabele 1, we hebben hier het gemiddelde besteetbare inkomen van iedere provincie over 8 jaar. aldus het gemiddeld
 
 ```{r gen_var1}
 
+gem_inkomen_provincie <- aggregate(gem_bstb_inkomen_x_100 ~ Provincies, 
+                                    data = datacombined15tot23goed, 
+                                    FUN = mean)
+
+write.csv(gem_inkomen_provincie, "goede data/gem_inkomen_provincie.csv", row.names = FALSE)
+
+colnames(gem_inkomen_provincie)[colnames(gem_inkomen_provincie) == "gem_bstb_inkomen_x_100"] <- "gem_bstb_inkomen_per_jaar_x_100"
+
+write.csv(gem_inkomen_provincie, "goede data/gem_inkomen_provincie.csv", row.names = FALSE)
 ```
 
 Variable 2
