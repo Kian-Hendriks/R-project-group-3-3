@@ -1,8 +1,9 @@
 ---
 title: "Regional Income Growth and House Price Dynamics in the Netherlands"
-author: "Vincent, Joris, Vincent, Thies, Kian & Julius (2898227) "
+author: 'Vincent, Joris (2890473), Vincent, Thies, Kian & Julius (2898227) '
 date: "`r Sys.Date()`"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 ---
