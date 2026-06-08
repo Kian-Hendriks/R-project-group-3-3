@@ -228,15 +228,21 @@ Think of things like:
 ## 3.1 Data cleaning
 Data cleaning codering datacombined15tot23goed.
 ```{r}
-names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...6"] <- "gem_st_inkomen_x_100"
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...6"] <- "gem_st_inkomen_x_1000"
 
-names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...7"] <- "med_st_inkomen_x_100"
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...7"] <- "med_st_inkomen_x_1000"
 
+<<<<<<< HEAD
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...8"] <- "gem_bstb_inkomen_x_100"
   
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
+=======
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...8"] <- "gem_bstb_inkomen_x_1000"
 
-names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_1000"
+>>>>>>> c6518e6db0c39fa1f561bcda18b5c97d5399a3c5
+
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_1000"
 
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "Regio.s"] <- "Provincies"
 
