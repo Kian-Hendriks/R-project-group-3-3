@@ -257,6 +257,23 @@ datacombined15tot23goed$X. <- NULL
 datacombined15tot23goed$...1 <- NULL
 
 ```
+Data cleaning codering woningprijsprov
+```{r}
+woningprijsprov$`1995` <- format(woningprijsprov$`1995`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2000` <- format(woningprijsprov$`2000`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2005` <- format(woningprijsprov$`2005`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2010` <- format(woningprijsprov$`2010`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2015` <- format(woningprijsprov$`2015`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2020` <- format(woningprijsprov$`2020`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2021` <- format(woningprijsprov$`2021`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2022` <- format(woningprijsprov$`2022`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2023` <- format(woningprijsprov$`2023`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2024` <- format(woningprijsprov$`2024`, big.mark = ".", scientific = FALSE)
+woningprijsprov$`2025` <- format(woningprijsprov$`2025`, big.mark = ".", scientific = FALSE)
+saveRDS(woningprijsprov, "goede data/gem_huizenprijs_per_provincie.RDS")
+
+```
+
 
 Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
 
