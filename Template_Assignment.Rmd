@@ -399,8 +399,9 @@ ggplot(nl_map) +
     palette = "Blues",
     direction = 1,        # 1 = darker means higher value
     name = "Mean spendable income (x100 €)"
+  
   ) +
-  theme_minimal() 
+  theme_void() 
   labs(
     title = "Mean Spendable Income per Province",
     subtitle = "Average over 2015-2023"
