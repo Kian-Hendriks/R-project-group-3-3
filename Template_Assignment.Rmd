@@ -290,7 +290,7 @@ Please use a separate 'R block' of code for each type of cleaning. So, e.g. one 
 ## 3.2 Generate necessary variables
 
 Variable 1
-maken van nieuwe variabele 1, we hebben hier het gemiddelde besteetbare inkomen van iedere provincie over 8 jaar. aldus het gemiddeld
+maken van nieuwe variabele 1, we hebben hier het gemiddelde besteedbare inkomen van iedere provincie over 8 jaar. aldus het gemiddeld
 
 ```{r gen_var1}
 
