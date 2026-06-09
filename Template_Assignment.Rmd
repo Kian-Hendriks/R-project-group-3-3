@@ -249,6 +249,9 @@ names(datacombined15tot23goed)[names(datacombined15tot23goed) == "`nr_huishouden
 
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X"] <- "Provincie_nr"
 
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "x.1.000"] <- "Nr_huishoudens"
+
+write.csv(datacombined15tot23goed, "goede data/datacombined15tot23goed.csv", row.names = FALSE)
 
 saveRDS(datacombined15tot23goed, "goede data/datacombined15tot23goed.rds")
 
@@ -260,6 +263,7 @@ datacombined15tot23goed$...1 <- NULL
 ```
 Data cleaning codering woningprijsprov
 ```{r}
+woningprijsprov <- read.csv("goede data/goedehuizenprijsenperprov.csv")
 woningprijsprov$`1995` <- format(woningprijsprov$`1995`, big.mark = ".", scientific = FALSE)
 woningprijsprov$`2000` <- format(woningprijsprov$`2000`, big.mark = ".", scientific = FALSE)
 woningprijsprov$`2005` <- format(woningprijsprov$`2005`, big.mark = ".", scientific = FALSE)
@@ -271,20 +275,22 @@ woningprijsprov$`2022` <- format(woningprijsprov$`2022`, big.mark = ".", scienti
 woningprijsprov$`2023` <- format(woningprijsprov$`2023`, big.mark = ".", scientific = FALSE)
 woningprijsprov$`2024` <- format(woningprijsprov$`2024`, big.mark = ".", scientific = FALSE)
 woningprijsprov$`2025` <- format(woningprijsprov$`2025`, big.mark = ".", scientific = FALSE)
+woningprijsprov$...1 <- NULL
 
 saveRDS(woningprijsprov, "goede data/gem_huizenprijs_per_provincie.RDS")
-
-write.csv(gem_huizenprijs_per_provincie, "goede data/gem_huizen-per_provincie_goed.csv")
 
 ```
-saveRDS(woningprijsprov, "goede data/gem_huizenprijs_per_provincie.RDS")
+
+```{r}
+write.csv(gem_huizenprijs_per_provincie, "goede data/goedehuizenprijsenperprov.csv", row.names = FALSE)
+```
 
 Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
 
 ## 3.2 Generate necessary variables
 
 Variable 1
-maken van nieuwe variabele 1, we hebben hier het gemiddelde besteetbare inkomen van iedere provincie over 8 jaar. aldus het gemiddeld
+maken van nieuwe variabele 1, we hebben hier het gemiddelde besteedbare inkomen van iedere provincie over 8 jaar. aldus het gemiddeld
 
 ```{r gen_var1}
 
@@ -300,9 +306,25 @@ write.csv(gem_inkomen_provincie, "goede data/gem_inkomen_provincie.csv", row.nam
 ```
 
 Variable 2
+maken van nieuwe variabele 2 gebruik gemaakt van de oorspronkelijke dataset:datacombined15tot23goed. waarin we de gewogen gemiddeldes van het inkomen van verschillende provincies: binnen en buiten de randstad hebben gerepresenteerd 
 
+de vorm van de huidige gecleande dataset aanpassen om dan zo verder te kunnen werken met een vernieuwde dataset en ook een vernieuwde dataset. omdat we voor deze nieuwe variabele eigenlijk onze twee datasets moeten samenvoegen.
 ```{r gen_var2}
+woningprijsprov <- read.csv("goede data/goedehuizenprijsenperprov.csv", check.names = FALSE)
 
+woningprijsprov <- woningprijsprov[!grepl("Bron", woningprijsprov$`Regio's`), ]
+
+woningprijsprov$Onderwerp <- NULL
+woningprijsprov$`...4` <- NULL
+
+woningprijsprov_lang <- reshape(woningprijsprov,
+                                varying = c("2015", "2020", "2021", "2022", "2023"),
+                                v.names = "gem_huizenprijs",
+                                timevar = "jaar",
+                                times = c(2015, 2020, 2021, 2022, 2023),
+                                direction = "long")
+
+write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv", row.names = FALSE)
 ```
 
 ## 3.3 Visualize temporal variation
@@ -314,7 +336,12 @@ Variable 2
 ## 3.4 Visualize spatial variation
 
 ```{r visualise_map}
+install.packages("magick")
+libraby(magick)
+img <- image_read("kaart-nederland.png.webp") #foto_nederland
 
+
+nederland_map <- st_read("data/kaart-nederland.png.webp")
 ```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.

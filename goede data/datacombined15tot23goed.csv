@@ -1,4 +1,4 @@
-"Provincie_nr","Provincies","x.1.000","gem_st_inkomen_x_100","med_st_inkomen_x_100","gem_bstb_inkomen_x_100","med_bstb_inkomen_x_100","jaar"
+"Provincie_nr","Provincies","Nr_huishoudens","gem_st_inkomen_x_100","med_st_inkomen_x_100","gem_bstb_inkomen_x_100","med_bstb_inkomen_x_100","jaar"
 1,"Groningen (PV)",2829,233,213,322,273,2015
 2,"Fryslân (PV)",2846,251,230,357,312,2015
 3,"Drenthe (PV)",2115,263,240,377,332,2015
@@ -107,4 +107,3 @@
 10,"Zeeland (PV)",1797,371,338,530,445,2023
 11,"Noord-Brabant (PV)",11885,387,348,563,464,2023
 12,"Limburg (PV)",5347,357,325,505,417,2023
-13,"Bron: CBS",NA,NA,NA,NA,NA,NA
