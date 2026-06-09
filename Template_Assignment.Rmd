@@ -151,6 +151,13 @@ data2022$jaar <- 2022
 data2023 <- read.csv("data/data2023.csv")
 data2023$jaar <- 2023
 
+data2017$X.5 <- NULL
+data2018$X.5 <- NULL
+data2019$X.5 <- NULL
+data2020$X.5 <- NULL
+data2021$X.5 <- NULL
+data2022$X.5 <- NULL
+data2023$X.5 <- NULL
 
 data1718 <- rbind(data2017, data2018)
 
@@ -272,6 +279,7 @@ saveRDS(woningprijsprov, "goede data/gem_huizenprijs_per_provincie.RDS")
 ```
 
 ```{r}
+gem_huizenprijs_per_provincie <- readRDS("goede data/gem_huizenprijs_per_provincie.RDS")
 write.csv(gem_huizenprijs_per_provincie, "goede data/goedehuizenprijsenperprov.csv", row.names = FALSE)
 ```
 
