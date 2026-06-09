@@ -336,7 +336,7 @@ df_plot <- df %>%
   ) %>%
   ungroup()
 
-# Data omzetten naar lang formaat (makkelijkste manier voor legenda in ggplot2)
+# Data omzetten naar lang formaat
 df_long <- df_plot %>%
   pivot_longer(cols = c(groei_huizen, groei_inkomen),
                names_to = "type",
@@ -361,19 +361,19 @@ maak_grafiek <- function(data, titel) {
     theme(legend.position = "top")
 }
 
-# Grafieken maken
-plot_randstad <- maak_grafiek(
-  df_long %>% filter(regio == "Randstad (incl. Flevoland)"),
-  "Groei Randstad t.o.v. 2020"
-)
+# Automatisch beide grafieken tonen
+grafieken_tonen <- function() {
+  print(maak_grafiek(
+    df_long %>% filter(regio == "Randstad (incl. Flevoland)"),
+    "Groei Randstad t.o.v. 2020"
+  ))
+  print(maak_grafiek(
+    df_long %>% filter(regio == "Buiten Randstad"),
+    "Groei Buiten Randstad t.o.v. 2020"
+  ))
+}
 
-plot_buiten <- maak_grafiek(
-  df_long %>% filter(regio == "Buiten Randstad"),
-  "Groei Buiten Randstad t.o.v. 2020"
-)
-
-print(plot_randstad)
-print(plot_buiten)
+grafieken_tonen()
 ```
 
 ## 3.4 Visualize spatial variation
