@@ -336,7 +336,12 @@ write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv",
 ## 3.4 Visualize spatial variation
 
 ```{r visualise_map}
+install.packages("magick")
+libraby(magick)
+img <- image_read("kaart-nederland.png.webp") #foto_nederland
 
+
+nederland_map <- st_read("data/kaart-nederland.png.webp")
 ```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
