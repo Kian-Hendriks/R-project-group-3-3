@@ -395,8 +395,12 @@ my_data <- data.frame(
 nl_map <- merge(nl_map, my_data, by.x = "statnaam", by.y = "Provincies")
 ggplot(nl_map) +
   geom_sf(aes(fill = mean_income)) +
-  scale_fill_viridis_c(name = "Mean income (x100 €)") +
-  theme_minimal() +
+  scale_fill_distiller(
+    palette = "Blues",
+    direction = 1,        # 1 = darker means higher value
+    name = "Mean spendable income (x100 €)"
+  ) +
+  theme_minimal() 
   labs(
     title = "Mean Spendable Income per Province",
     subtitle = "Average over 2015-2023"
