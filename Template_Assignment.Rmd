@@ -48,23 +48,15 @@ This project investigates the relationship between regional income growth and ho
 
 Preferably from a URL, but if not, make sure to download the data and store it in a shared location that you can load the data in from. Do not store the data in a folder you include in the Github repository!
 
-hoge_veerkracht_2024 <- #read.csv("C:/Users/vince/Downloads/hoge-veerkracht-2024.csv", header=FALSE, sep=",")
-
-write.csv(hoge_veerkracht_2024, "data/veerkracht2024.csv")
-
-Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030 <- #read.csv("C:/Users/vince/Downloads/Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030.csv", header=FALSE, sep=",")
-
-write.csv(Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030, "data/inkomenperregio.csv")
-
 <<<<<<< HEAD
-Bestaande_koopwoningen <- #read.csv("Bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630", header = FALSE, sep=",")
-
-write.csv(bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630, "data/bestaande koopwoningen.csv")
+Our data
 =======
  <<<<<<< HEAD
 =======
 
 ```{r}
+
+
 
 #Bestaande_koopwoningen <- #read.csv("Bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630", header = FALSE, sep=",")
 
@@ -200,33 +192,19 @@ Data cleaning codering datacombined15tot23goed.
 ```{r}
 datacombined15tot23goed <- read.csv("goede data/datacombined15tot23goed.csv")
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...6"] <- "gem_st_inkomen_x_100"
-
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...7"] <- "med_st_inkomen_x_100"
-
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...8"] <- "gem_bstb_inkomen_x_100"
-  
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
-
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...8"] <- "gem_bstb_inkomen_x_100"
-
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_100"
-
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...9"] <- "med_bstb_inkomen_x_1000"
-
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "Regio.s"] <- "Provincies"
-
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "`nr_huishoudens"] <- "ant_hh_p_provincie"
-
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X"] <- "Provincie_nr"
-
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "x.1.000"] <- "Nr_huishoudens"
-
 write.csv(datacombined15tot23goed, "goede data/datacombined15tot23goed.csv", row.names = FALSE)
-
 saveRDS(datacombined15tot23goed, "goede data/datacombined15tot23goed.rds")
-
 datacombined15tot23goed <- datacombined15tot23goed[datacombined15tot23goed$Provincies != "Bron: CBS", ]
-
 datacombined15tot23goed$X. <- NULL
 datacombined15tot23goed$...1 <- NULL
 
@@ -246,7 +224,6 @@ woningprijsprov$`2023` <- format(woningprijsprov$`2023`, big.mark = ".", scienti
 woningprijsprov$`2024` <- format(woningprijsprov$`2024`, big.mark = ".", scientific = FALSE)
 woningprijsprov$`2025` <- format(woningprijsprov$`2025`, big.mark = ".", scientific = FALSE)
 woningprijsprov$...1 <- NULL
-
 saveRDS(woningprijsprov, "goede data/gem_huizenprijs_per_provincie.RDS")
 
 ```
