@@ -141,6 +141,8 @@ data2015$jaar <- 2015
 data2016 <- read.csv("data/data2016.csv")
 data2016$jaar <- 2016
 
+data2015$X.5 <- NULL
+
 data1516 <- rbind(data2015, data2016)
 
 data2017 <- read.csv("data/data2017.csv")
@@ -173,13 +175,10 @@ datacombined15tot23 <- datacombined15tot23[datacombined15tot23$X != 13, ]
 
 colnames(datacombined15tot23)
 
-nieuwe_rij <- data.frame(X = 13, Regio.s = "Bron: CBS", x.1.000 = NA, X. = NA, X1.000.euro...4 = NA, X1.000.euro...5 = NA, X1.000.euro...6 = NA, X1.000.euro...7 = NA, jaar = NA)
-datacombined15tot23 <- rbind(datacombined15tot23, nieuwe_rij)
-
 saveRDS(datacombined15tot23, "goede data/datacombi1523.rds")
 
 ```
-
+datacombined15tot23 <- rbind(datacombined15tot23, nieuwe_rij)
 
 >>>>>>> aa58531b97baaa294028804c92f44f413d5b2bce
 >>>>>>> bac2c3c337e512b99b18e5db5831cf373552a9ab
