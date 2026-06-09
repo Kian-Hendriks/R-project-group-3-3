@@ -324,7 +324,60 @@ write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv",
 ## 3.3 Visualize temporal variation
 
 ```{r}
+library(tidyverse)
+library(scales)
 
+# Data inladen
+df <- read.csv("goede data/randstad_vs_buiten_randstad.csv", stringsAsFactors = FALSE)
+
+# Cumulatieve groei berekenen
+df_plot <- df %>%
+  arrange(regio, jaar) %>%
+  group_by(regio) %>%
+  mutate(
+    groei_huizen = (gem_huizenprijs / first(gem_huizenprijs)) - 1,
+    groei_inkomen = (gem_bstb_inkomen_euro / first(gem_bstb_inkomen_euro)) - 1
+  ) %>%
+  ungroup()
+
+# Data omzetten naar lang formaat (makkelijkste manier voor legenda in ggplot2)
+df_long <- df_plot %>%
+  pivot_longer(cols = c(groei_huizen, groei_inkomen),
+               names_to = "type",
+               values_to = "groei") %>%
+  mutate(type = recode(type,
+                       "groei_huizen" = "Huizenprijs",
+                       "groei_inkomen" = "Inkomen"))
+
+# Functie voor grafiek
+maak_grafiek <- function(data, titel) {
+  ggplot(data, aes(x = jaar, y = groei, color = type, linetype = type)) +
+    geom_line(linewidth = 1) +
+    geom_point(size = 2.5) +
+    geom_hline(yintercept = 0, linetype = "dotted", color = "grey40") +
+    scale_y_continuous(labels = percent_format(accuracy = 1)) +
+    scale_x_continuous(breaks = c(2020, 2021, 2022, 2023)) +
+    scale_color_manual(values = c("Huizenprijs" = "steelblue", "Inkomen" = "orange")) +
+    scale_linetype_manual(values = c("Huizenprijs" = "solid", "Inkomen" = "dashed")) +
+    labs(title = titel, x = "Jaar", y = "Groei t.o.v. 2020",
+         color = "", linetype = "") +
+    theme_minimal() +
+    theme(legend.position = "top")
+}
+
+# Grafieken maken
+plot_randstad <- maak_grafiek(
+  df_long %>% filter(regio == "Randstad (incl. Flevoland)"),
+  "Groei Randstad t.o.v. 2020"
+)
+
+plot_buiten <- maak_grafiek(
+  df_long %>% filter(regio == "Buiten Randstad"),
+  "Groei Buiten Randstad t.o.v. 2020"
+)
+
+print(plot_randstad)
+print(plot_buiten)
 ```
 
 ## 3.4 Visualize spatial variation
