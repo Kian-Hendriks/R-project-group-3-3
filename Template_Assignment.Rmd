@@ -9,7 +9,6 @@ output:
 ---
 
 # Set-up your environment
-hoi
 ```{r package_install, include=FALSE}
 install.packages("tidyverse")
 install.packages("yaml")
@@ -176,26 +175,6 @@ colnames(datacombined15tot23)
 saveRDS(datacombined15tot23, "goede data/datacombi1523.rds")
 
 ```
-datacombined15tot23 <- rbind(datacombined15tot23, nieuwe_rij)
-
->>>>>>> aa58531b97baaa294028804c92f44f413d5b2bce
->>>>>>> bac2c3c337e512b99b18e5db5831cf373552a9ab
-
-gemiddelde_inkomens <- #read.csv("inkomen_gemiddeld_", header = FALSE, sep",")
-
-write.csv(inkomen_gemiddeld_, "data/inkomen_gemiddeld_)
-<<<<<<< HEAD
- midwest is an example dataset included in the tidyverse package
-=======
-
-head(table_86004NED.csv)
-nrow(table_86004NED.csv)
-nrow(table_86004NED.csv)
-
-table_86004NED.csv <- table_86004NED.csv[1:(nrow(table_86004NED.csv)-4), ]
-
-midwest is an example dataset included in the tidyverse package
->>>>>>> bdbc7d74703b84c02c3eae73a71647a33714c1d8
 
 ## 2.2 Provide a short summary of the dataset(s)
 
@@ -213,13 +192,13 @@ Think of things like:
 
 -   Have they been measured by interviewing individuals or is the data coming from administrative sources?
 
-*For the sake of this example, I will continue with the assignment...*
 
 # Part 3 - Quantifying
 
 ## 3.1 Data cleaning
 Data cleaning codering datacombined15tot23goed.
 ```{r}
+datacombined15tot23goed <- read.csv("goede data/datacombined15tot23goed.csv")
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...6"] <- "gem_st_inkomen_x_100"
 
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...7"] <- "med_st_inkomen_x_100"
@@ -304,7 +283,7 @@ de vorm van de huidige gecleande dataset aanpassen om dan zo verder te kunnen we
 ```{r gen_var2}
 woningprijsprov <- read.csv("goede data/goedehuizenprijsenperprov.csv", check.names = FALSE)
 
-woningprijsprov <- woningprijsprov[!grepl("Bron", woningprijsprov$`Regio's`), ]
+woningprijsprov <- woningprijsprov[!grepl("Bron", woningprijsprov$`Regio.s`), ]
 
 woningprijsprov$Onderwerp <- NULL
 woningprijsprov$`...4` <- NULL
@@ -315,6 +294,8 @@ woningprijsprov_lang <- reshape(woningprijsprov,
                                 timevar = "jaar",
                                 times = c(2015, 2020, 2021, 2022, 2023),
                                 direction = "long")
+
+woningprijsprov_lang$id <- NULL
 
 write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv", row.names = FALSE)
 ```
@@ -452,19 +433,7 @@ Here you provide a description of why the plot above is relevant to your specifi
 What is the poverty rate by state?
 
 ```{r visualise_subpopulations}
-dataset$inmetro <- dataset$inmetro %>% as.factor()
-# Boxplot of poverty rate by state using the 'midwest' dataset
-ggplot(dataset, aes(x = inmetro, y = percadultpoverty)) +
-  geom_boxplot() +
-  labs(
-    title = "Distribution of Poverty Rates by Metropolitan status (Midwest counties)",
-    x = "Metropolitan Area",
-    y = "Poverty Rate of Adults (%)"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = "right"
-  )
+
 ```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
