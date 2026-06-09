@@ -73,39 +73,39 @@ write.csv(bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630
 
 #data_2015 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2015.csv", header=FALSE, sep=";")
 X2015 <- read.csv("data/data2015.csv")
-write.csv(X2015, "data/data2015.csv")
+write.csv(X2015, "data/data2015.csv", row.names = FALSE)
 
 #data_2016 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2016.csv", header=FALSE, sep=";")
 X2016 <- read.csv("data/data2016.csv")
-write.csv(X2016, "data/data2016.csv")
+write.csv(X2016, "data/data2016.csv", row.names = FALSE)
 
 #data_2017 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2017.csv", header=FALSE, sep=";")
 X2017 <- read.csv("data/data2017.csv")
-write.csv(X2017, "data/data2017.csv")
+write.csv(X2017, "data/data2017.csv", row.names = FALSE)
 
 #data_2018 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2018.csv", header=FALSE, sep=";")
 X2018 <- read.csv("data/data2018.csv")
-write.csv(X2018, "data/data2018.csv")
+write.csv(X2018, "data/data2018.csv", row.names = FALSE)
 
 #data_2019 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2019.csv", header=FALSE, sep=";")
 X2019 <- read.csv("data/data2019.csv")
-write.csv(X2019, "data/data2019.csv")
+write.csv(X2019, "data/data2019.csv", row.names = FALSE)
 
 #data_2020 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2020.csv", header=FALSE, sep=";")
  X2020 <- read.csv("data/data2020.csv")
-write.csv(X2020, "data/data2020.csv")
+write.csv(X2020, "data/data2020.csv", row.names = FALSE)
 
 #data_2021 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2021.csv", header=FALSE, sep=";")
 X2021 <- read.csv("data/data2021.csv")
-write.csv(X2021, "data/data2021.csv")
+write.csv(X2021, "data/data2021.csv", row.names = FALSE)
 
 #data_2022 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2022.csv", header=FALSE, sep=";")
 X2022 <- read.csv("data/data2022.csv")
-write.csv(X2022, "data/data2022.csv")
+write.csv(X2022, "data/data2022.csv", row.names = FALSE)
 
 #data_2023 <- read.csv("C:/Uni/Year 1/Period 6/Programming for Economics/2023.csv", header=FALSE, sep=";")
 X2023 <- read.csv("data/data2023.csv")
-write.csv(X2023, "data/data2023.csv")
+write.csv(X2023, "data/data2023.csv", row.names = FALSE)
 
 ```
 
@@ -119,16 +119,6 @@ write.csv(X2023, "data/data2023.csv")
 ## joining
 
 ```{r}
-data2019 <- read.csv("data/data2019.csv")
-data2019$jaar <- 2019
-data2020 <- read.csv("data/data2020.csv")
-data2020$jaar <- 2020
-data2021 <- read.csv("data/data2021.csv")
-data2021$jaar <- 2021
-data2022 <- read.csv("data/data2022.csv")
-data2022$jaar <- 2022
-data2023 <- read.csv("data/data2023.csv")
-data2023$jaar <- 2023
 
 
 data2015 <- read.csv("data/data2015.csv")
@@ -137,6 +127,10 @@ data2016 <- read.csv("data/data2016.csv")
 data2016$jaar <- 2016
 
 data2015$X.5 <- NULL
+data2016$X.5 <- NULL
+
+data2015$X.7 <- NULL
+data2016$X.7 <- NULL
 
 data1516 <- rbind(data2015, data2016)
 
@@ -147,6 +141,7 @@ data2018$jaar <- 2018
 
 data2019 <- read.csv("data/data2019.csv")
 data2019$jaar <- 2019
+
 data2020 <- read.csv("data/data2020.csv")
 data2020$jaar <- 2020
 data2021 <- read.csv("data/data2021.csv")
@@ -155,6 +150,7 @@ data2022 <- read.csv("data/data2022.csv")
 data2022$jaar <- 2022
 data2023 <- read.csv("data/data2023.csv")
 data2023$jaar <- 2023
+
 
 data1718 <- rbind(data2017, data2018)
 
