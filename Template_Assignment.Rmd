@@ -363,12 +363,27 @@ grafieken_tonen()
 
 
 ```{r visualise_map}
-install.packages(c("sf", "ggplot2"))
 library(sf)
 library(ggplot2)
-nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson")
-nl_map$statnaam
-my_data <- data.frame(
+
+nl_map_base <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson")
+
+plot_nl <- function(data, value_col, fill_palette, legend_title, plot_title, subtitle = NULL) {
+  nl_map <- merge(nl_map_base, data, by.x = "statnaam", by.y = "Provincies")
+  
+  ggplot(nl_map) +
+    geom_sf(aes(fill = .data[[value_col]])) +
+    scale_fill_distiller(
+      palette = fill_palette,
+      direction = 1,
+      name = legend_title,
+      labels = scales::comma
+    ) +
+    theme_void() +
+    labs(title = plot_title, subtitle = subtitle)
+}
+
+inkomen <- data.frame(
   Provincies = c("Groningen", "Fryslân", "Limburg", "Drenthe", "Overijssel",
                  "Zeeland", "Zuid-Holland", "Gelderland", "Flevoland",
                  "Noord-Brabant", "Noord-Holland", "Utrecht"),
@@ -376,29 +391,8 @@ my_data <- data.frame(
                   445.1111, 453.8889, 454.7778, 461.2222, 466.7778,
                   474.8889, 493.5556)
 )
-nl_map <- merge(nl_map, my_data, by.x = "statnaam", by.y = "Provincies")
-ggplot(nl_map) +
-  geom_sf(aes(fill = mean_income)) +
-  scale_fill_distiller(
-    palette = "Blues",
-    direction = 1,        # 1 = darker means higher value
-    name = "Mean spendable income (x100 €)"
-  
-  ) +
-  theme_void() +
-  labs(
-    title = "Mean Spendable Income per Province",
-    subtitle = "Average over 2015-2023"
-  ) 
-  
-  library(sf)
-library(ggplot2)
 
-# Stap 1: Kaart laden
-nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson")
-
-# Stap 2: Jouw data
-my_data2 <- data.frame(
+huizen <- data.frame(
   Provincies = c("Groningen", "Fryslân", "Drenthe", "Overijssel", "Flevoland",
                  "Gelderland", "Utrecht", "Noord-Holland", "Zuid-Holland",
                  "Zeeland", "Noord-Brabant", "Limburg"),
@@ -407,23 +401,15 @@ my_data2 <- data.frame(
                   280299.6, 360750.2, 283216.8)
 )
 
-# Stap 3: Samenvoegen
-nl_map <- merge(nl_map, my_data2, by.x = "statnaam", by.y = "Provincies")
+plot_nl(inkomen, "mean_income", "Blues",
+        "Mean spendable income (x100 €)",
+        "Mean Spendable Income per Province",
+        "Average over 2015-2023")
 
-# Stap 4: Kaart plotten
-ggplot(nl_map) +
-  geom_sf(aes(fill = huizenprijs)) +
-  scale_fill_distiller(
-    palette = "Greens",
-    direction = 1,
-    name = "Gem. huizenprijs (€)",
-    labels = scales::comma
-  ) +
-  theme_void() +
-  labs(
-    title = "Gemiddelde Huizenprijs per Provincie",
-    subtitle = "Gemiddelde over de laatste jaren"
-  ) 
+plot_nl(huizen, "huizenprijs", "Greens",
+        "Gem. huizenprijs (€)",
+        "Gemiddelde Huizenprijs per Provincie",
+        "Gemiddelde over de laatste jaren")
 ```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
