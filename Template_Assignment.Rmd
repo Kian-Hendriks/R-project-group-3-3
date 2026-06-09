@@ -336,12 +336,28 @@ write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv",
 ## 3.4 Visualize spatial variation
 
 ```{r visualise_map}
-install.packages("magick")
-libraby(magick)
-img <- image_read("kaart-nederland.png.webp") #foto_nederland
-
-
-nederland_map <- st_read("data/kaart-nederland.png.webp")
+install.packages(c("sf", "ggplot2"))
+library(sf)
+library(ggplot2)
+nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson")
+nl_map$statnaam
+my_data <- data.frame(
+  Provincies = c("Groningen", "Fryslân", "Limburg", "Drenthe", "Overijssel",
+                 "Zeeland", "Zuid-Holland", "Gelderland", "Flevoland",
+                 "Noord-Brabant", "Noord-Holland", "Utrecht"),
+  mean_income = c(375.5556, 418.3333, 423.7778, 440.7778, 443.6667,
+                  445.1111, 453.8889, 454.7778, 461.2222, 466.7778,
+                  474.8889, 493.5556)
+)
+nl_map <- merge(nl_map, my_data, by.x = "statnaam", by.y = "Provincies")
+ggplot(nl_map) +
+  geom_sf(aes(fill = mean_income)) +
+  scale_fill_viridis_c(name = "Mean income (x100 €)") +
+  theme_minimal() +
+  labs(
+    title = "Mean Spendable Income per Province",
+    subtitle = "Average over 2015-2023"
+  )
 ```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
