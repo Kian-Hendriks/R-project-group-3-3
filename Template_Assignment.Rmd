@@ -23,7 +23,7 @@ require(yaml)
 
 # Regional Income Growth and House Price Dynamics in the Netherlands
 
-Vincent, Joris, Vincent, Thies, Kian & Julius
+
 
 Tutorial group 3.3 
 
@@ -361,6 +361,7 @@ grafieken_tonen()
 
 ## 3.4 Visualize spatial variation
 
+
 ```{r visualise_map}
 install.packages(c("sf", "ggplot2"))
 library(sf)
@@ -384,12 +385,11 @@ ggplot(nl_map) +
     name = "Mean spendable income (x100 €)"
   
   ) +
-  theme_void() 
+  theme_void() +
   labs(
     title = "Mean Spendable Income per Province",
     subtitle = "Average over 2015-2023"
-  )
-  
+  ) 
   
   library(sf)
 library(ggplot2)
@@ -419,11 +419,11 @@ ggplot(nl_map) +
     name = "Gem. huizenprijs (€)",
     labels = scales::comma
   ) +
-  theme_void() 
+  theme_void() +
   labs(
     title = "Gemiddelde Huizenprijs per Provincie",
     subtitle = "Gemiddelde over de laatste jaren"
-  )
+  ) 
 ```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
