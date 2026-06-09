@@ -406,6 +406,41 @@ ggplot(nl_map) +
     title = "Mean Spendable Income per Province",
     subtitle = "Average over 2015-2023"
   )
+  
+  
+  library(sf)
+library(ggplot2)
+
+# Stap 1: Kaart laden
+nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson")
+
+# Stap 2: Jouw data
+my_data2 <- data.frame(
+  Provincies = c("Groningen", "Fryslân", "Drenthe", "Overijssel", "Flevoland",
+                 "Gelderland", "Utrecht", "Noord-Holland", "Zuid-Holland",
+                 "Zeeland", "Noord-Brabant", "Limburg"),
+  huizenprijs = c(265840.0, 274763.0, 296620.4, 307718.0, 329630.8,
+                  353163.8, 423367.6, 446549.2, 355059.0,
+                  280299.6, 360750.2, 283216.8)
+)
+
+# Stap 3: Samenvoegen
+nl_map <- merge(nl_map, my_data2, by.x = "statnaam", by.y = "Provincies")
+
+# Stap 4: Kaart plotten
+ggplot(nl_map) +
+  geom_sf(aes(fill = huizenprijs)) +
+  scale_fill_distiller(
+    palette = "Greens",
+    direction = 1,
+    name = "Gem. huizenprijs (€)",
+    labels = scales::comma
+  ) +
+  theme_void() 
+  labs(
+    title = "Gemiddelde Huizenprijs per Provincie",
+    subtitle = "Gemiddelde over de laatste jaren"
+  )
 ```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
