@@ -162,11 +162,10 @@ saveRDS(datacombined15tot23, "goede data/datacombi1523.rds")
 
 ## 2.2 Provide a short summary of the dataset(s)
 
+For this study two datasets from the Centraal Bureau voor de Statistiek (CBS) were used. The first dataset, Bestaande koopwoningen; verkoopprijzen prijsindex 2020=100 (85773NED), contains data on the variables ‘gemiddelde verkoopprijs van bestaande koopwoningen en bijbehorende prijsindex op provinciaal niveau’. The second dataset, inkomen van huishoudens; huishoudenskenmerken, regio (86004NED), contains information on the ‘gemiddelde inkomen van huishoudens, op provinciaal niveau’.
 
-In this case we see 28 variables, but we miss some information on what units they are in. We also don't know anything about the year/moment in which this data has been captured.
+Both datasets are available on CBS StatLine. The dataset on the prices of houses spans from 2015 until 2025, the dataset on income only covers 2015 until 2023 (In order to see other years or regions, the filter option should be used to select the desired years).  For the analysis in this research the overlapping years of 2015-2023 are studied. 
 
-
-These are things that are usually included in the metadata of the dataset. For your project, you need to provide us with the information from your metadata that we need to understand your dataset of choice.
 
 ## 2.3 Describe the type of variables included
 
