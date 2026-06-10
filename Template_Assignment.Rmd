@@ -293,7 +293,7 @@ write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv",
 
 ## 3.3 Visualize temporal variation
 
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(scales)
 
@@ -352,12 +352,12 @@ grafieken_tonen()
 
 ## 3.4 Visualize spatial variation
 
-```{r visualise_map, echo=FALSE}
-install.packages(c("sf", "ggplot2"))
-library(sf)
-library(ggplot2)
-nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson")
-nl_map$statnaam
+```{r visualise_map, echo=FALSE, message=FALSE, warning=FALSE}
+#install.packages(c("sf", "ggplot2"))
+require(sf)
+require(ggplot2)
+nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson", quiet = TRUE)
+
 my_data <- data.frame(
   Provincies = c("Groningen", "Fryslân", "Limburg", "Drenthe", "Overijssel",
                  "Zeeland", "Zuid-Holland", "Gelderland", "Flevoland",
@@ -373,20 +373,15 @@ ggplot(nl_map) +
     palette = "Blues",
     direction = 1,        # 1 = darker means higher value
     name = "Mean spendable income (x100 €)"
-  
   ) +
-  theme_void() 
+  theme_void() +
   labs(
     title = "Mean Spendable Income per Province",
     subtitle = "Average over 2015-2023"
   )
-  
-  
-  library(sf)
-library(ggplot2)
 
 # Stap 1: Kaart laden
-nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson")
+nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson", quiet = TRUE)
 
 # Stap 2: Jouw data
 my_data2 <- data.frame(
@@ -410,7 +405,7 @@ ggplot(nl_map) +
     name = "Gem. huizenprijs (€)",
     labels = scales::comma
   ) +
-  theme_void() 
+  theme_void() +
   labs(
     title = "Gemiddelde Huizenprijs per Provincie",
     subtitle = "Gemiddelde over de laatste jaren"
