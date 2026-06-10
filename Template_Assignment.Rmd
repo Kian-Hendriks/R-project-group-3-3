@@ -15,7 +15,7 @@ install.packages("yaml")
 install.packages("rmarkdown")
 ```
 
-```{r packages}
+```{r packages, include=FALSE}
 require(tidyverse)
 require(rmarkdown)
 require(yaml)
@@ -27,7 +27,6 @@ Vincent, Joris, Vincent, Thies, Kian & Julius
 
 Tutorial group 3.3 
 
-C. Schouwenaar
 
 # Part 1 - Identify a Social Problem
 
@@ -45,26 +44,10 @@ This project investigates the relationship between regional income growth and ho
 # Part 2 - Data Sourcing
 
 ## 2.1 Load in the data
+we used 9 different data sets and combined we did this using this code for each
+first we cleaned the already existing datasets. aand combined everything together using this code: datacombined15tot23 <- rbind(Data15161718, data2019, data2020, data2021, data2022, data2023).
 
-Preferably from a URL, but if not, make sure to download the data and store it in a shared location that you can load the data in from. Do not store the data in a folder you include in the Github repository!
-
-hoge_veerkracht_2024 <- #read.csv("C:/Users/vince/Downloads/hoge-veerkracht-2024.csv", header=FALSE, sep=",")
-
-write.csv(hoge_veerkracht_2024, "data/veerkracht2024.csv")
-
-Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030 <- #read.csv("C:/Users/vince/Downloads/Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030.csv", header=FALSE, sep=",")
-
-write.csv(Inkomen_van_huishoudens__huishoudenskenmerken__regio__indeling_2024__02062026_164030, "data/inkomenperregio.csv")
-
-<<<<<<< HEAD
-Bestaande_koopwoningen <- #read.csv("Bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630", header = FALSE, sep=",")
-
-write.csv(bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630, "data/bestaande koopwoningen.csv")
-=======
- <<<<<<< HEAD
-=======
-
-```{r}
+```{r include=FALSE}
 
 #Bestaande_koopwoningen <- #read.csv("Bestaande_koopwoningen_gemiddelde_verkoopprijzen_regio_02062026_164630", header = FALSE, sep=",")
 
@@ -108,16 +91,21 @@ write.csv(X2023, "data/data2023.csv", row.names = FALSE)
 
 ```
 
-```{r}
+```{r include=FALSE}
 # prijswoningen <- read.csv(C:\Uni\Year 1\Period 6\Programming for Economics/gem_prijs_woning_prov)
 # Gem_prijs_woning_prov <- read.csv("goede data/woningprijsprov.csv")
 # write.csv(Gem_prijs_woning_prov, "goede data/woningprijsprov.csv")
 ```
 
+```{r}
+Bev_dichtheid <- read.csv("C:/Users/vince/Downloads/Regionale_kerncijfers_Nederland_10062026_163720.csv", header=FALSE, sep=";")
+write.csv(Bev_dichtheid, "goede data/bevolkingsdichtheid.csv")
+```
+
 
 ## joining
 
-```{r}
+```{r include=FALSE}
 
 
 data2015 <- read.csv("data/data2015.csv")
@@ -196,8 +184,12 @@ Administrative data mostly doesn’t suffer from non-responses and measurement e
 # Part 3 - Quantifying
 
 ## 3.1 Data cleaning
-Data cleaning codering datacombined15tot23goed.
-```{r}
+Data cleaning datacombined15tot23goed.
+we mainly used this code to clean this data set:
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...6"] <- "gem_st_inkomen_x_100"
+ETC.
+
+```{r include=FALSE}
 datacombined15tot23goed <- read.csv("goede data/datacombined15tot23goed.csv")
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...6"] <- "gem_st_inkomen_x_100"
 
@@ -231,8 +223,10 @@ datacombined15tot23goed$X. <- NULL
 datacombined15tot23goed$...1 <- NULL
 
 ```
-Data cleaning codering woningprijsprov
-```{r}
+Data cleaning woningprijsprov:
+we mainly used this code to clean this data set:
+woningprijsprov$`1995` <- format(woningprijsprov$`1995`, big.mark = ".", scientific = FALSE)
+```{r include=FALSE}
 woningprijsprov <- read.csv("goede data/goedehuizenprijsenperprov.csv")
 woningprijsprov$`1995` <- format(woningprijsprov$`1995`, big.mark = ".", scientific = FALSE)
 woningprijsprov$`2000` <- format(woningprijsprov$`2000`, big.mark = ".", scientific = FALSE)
@@ -251,19 +245,57 @@ saveRDS(woningprijsprov, "goede data/gem_huizenprijs_per_provincie.RDS")
 
 ```
 
-```{r}
+```{r include=FALSE}
 gem_huizenprijs_per_provincie <- readRDS("goede data/gem_huizenprijs_per_provincie.RDS")
 write.csv(gem_huizenprijs_per_provincie, "goede data/goedehuizenprijsenperprov.csv", row.names = FALSE)
 ```
+
+
+```{r}
+library(tidyverse)
+
+# Data inladen
+bevolking <- read.csv(
+  "data/Regionale_kerncijfers_Nederland_10062026_162325.csv",
+  sep = ";",
+  header = TRUE,
+  strip.white = TRUE,
+  fileEncoding = "UTF-8-BOM"
+)
+
+# Kolom hernoemen
+names(bevolking)[3] <- "bevolkingsdichtheid_km2"
+
+# Opschonen en breed maken
+bevolking_breed <- bevolking %>%
+  filter(Regio.s != "Nederland") %>%
+  mutate(
+    Regio.s = gsub(" \\(PV\\)", "", Regio.s),
+    bevolkingsdichtheid_km2 = as.numeric(bevolkingsdichtheid_km2)
+  ) %>%
+  pivot_wider(
+    names_from = Perioden,      # jaartallen worden kolomnamen
+    values_from = bevolkingsdichtheid_km2
+  ) %>%
+  arrange(Regio.s)              # provincies alfabetisch sorteren
+
+# Bekijken
+View(bevolking_breed)
+```
+
+
 
 Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
 
 ## 3.2 Generate necessary variables
 
 Variable 1
-maken van nieuwe variabele 1, we hebben hier het gemiddelde besteedbare inkomen van iedere provincie over 8 jaar. aldus het gemiddeld
+creating new variable 1, we have created the average disposable income of each province over 8 years. using the data set: gem_inkomen_provincie, We used the following code for this:
+gem_inkomen_provincie <- aggregate(gem_bstb_inkomen_x_100 ~ Provincies, 
+                                    data = datacombined15tot23goed, 
+                                    FUN = mean)
 
-```{r gen_var1}
+```{r gen_var1, include=FALSE}
 
 gem_inkomen_provincie <- aggregate(gem_bstb_inkomen_x_100 ~ Provincies, 
                                     data = datacombined15tot23goed, 
@@ -277,9 +309,9 @@ write.csv(gem_inkomen_provincie, "goede data/gem_inkomen_provincie.csv", row.nam
 ```
 
 Variable 2
-maken van nieuwe variabele 2 gebruik gemaakt van de oorspronkelijke dataset:datacombined15tot23goed. waarin we de gewogen gemiddeldes van het inkomen van verschillende provincies: binnen en buiten de randstad hebben gerepresenteerd 
+creating new variable 2 using the original dataset: datacombined15tot23goed, in which we represented the weighted averages of income for different provinces: inside and outside the Randstad.
 
-de vorm van de huidige gecleande dataset aanpassen om dan zo verder te kunnen werken met een vernieuwde dataset en ook een vernieuwde dataset. omdat we voor deze nieuwe variabele eigenlijk onze twee datasets moeten samenvoegen.
+adjust the format of the current cleaned dataset in order to continue working with a renewed dataset, and also a renewed dataset, because for this new variable we actually need to merge our two datasets.
 ```{r gen_var2}
 woningprijsprov <- read.csv("goede data/goedehuizenprijsenperprov.csv", check.names = FALSE)
 
@@ -302,7 +334,7 @@ write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv",
 
 ## 3.3 Visualize temporal variation
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(scales)
 
@@ -361,12 +393,12 @@ grafieken_tonen()
 
 ## 3.4 Visualize spatial variation
 
-```{r visualise_map}
-install.packages(c("sf", "ggplot2"))
-library(sf)
-library(ggplot2)
-nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson")
-nl_map$statnaam
+```{r visualise_map, echo=FALSE, message=FALSE, warning=FALSE}
+#install.packages(c("sf", "ggplot2"))
+require(sf)
+require(ggplot2)
+nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson", quiet = TRUE)
+
 my_data <- data.frame(
   Provincies = c("Groningen", "Fryslân", "Limburg", "Drenthe", "Overijssel",
                  "Zeeland", "Zuid-Holland", "Gelderland", "Flevoland",
@@ -382,20 +414,15 @@ ggplot(nl_map) +
     palette = "Blues",
     direction = 1,        # 1 = darker means higher value
     name = "Mean spendable income (x100 €)"
-  
   ) +
-  theme_void() 
+  theme_void() +
   labs(
     title = "Mean Spendable Income per Province",
     subtitle = "Average over 2015-2023"
   )
-  
-  
-  library(sf)
-library(ggplot2)
 
 # Stap 1: Kaart laden
-nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson")
+nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson", quiet = TRUE)
 
 # Stap 2: Jouw data
 my_data2 <- data.frame(
@@ -419,7 +446,7 @@ ggplot(nl_map) +
     name = "Gem. huizenprijs (€)",
     labels = scales::comma
   ) +
-  theme_void() 
+  theme_void() +
   labs(
     title = "Gemiddelde Huizenprijs per Provincie",
     subtitle = "Gemiddelde over de laatste jaren"
