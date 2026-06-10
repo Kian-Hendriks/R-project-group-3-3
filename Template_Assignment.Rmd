@@ -97,6 +97,11 @@ write.csv(X2023, "data/data2023.csv", row.names = FALSE)
 # write.csv(Gem_prijs_woning_prov, "goede data/woningprijsprov.csv")
 ```
 
+```{r}
+Bev_dichtheid <- read.csv("C:/Users/vince/Downloads/Regionale_kerncijfers_Nederland_10062026_162325.csv", header=FALSE, sep=";")
+write.csv(Bev_dichtheid, "goede data/bevolkingsdichtheid.csv")
+```
+
 
 ## joining
 
@@ -243,6 +248,41 @@ saveRDS(woningprijsprov, "goede data/gem_huizenprijs_per_provincie.RDS")
 gem_huizenprijs_per_provincie <- readRDS("goede data/gem_huizenprijs_per_provincie.RDS")
 write.csv(gem_huizenprijs_per_provincie, "goede data/goedehuizenprijsenperprov.csv", row.names = FALSE)
 ```
+
+
+```{r}
+library(tidyverse)
+
+# Data inladen
+bevolking <- read.csv(
+  "data/Regionale_kerncijfers_Nederland_10062026_162325.csv",
+  sep = ";",
+  header = TRUE,
+  strip.white = TRUE,
+  fileEncoding = "UTF-8-BOM"
+)
+
+# Kolom hernoemen
+names(bevolking)[3] <- "bevolkingsdichtheid_km2"
+
+# Opschonen en breed maken
+bevolking_breed <- bevolking %>%
+  filter(Regio.s != "Nederland") %>%
+  mutate(
+    Regio.s = gsub(" \\(PV\\)", "", Regio.s),
+    bevolkingsdichtheid_km2 = as.numeric(bevolkingsdichtheid_km2)
+  ) %>%
+  pivot_wider(
+    names_from = Perioden,      # jaartallen worden kolomnamen
+    values_from = bevolkingsdichtheid_km2
+  ) %>%
+  arrange(Regio.s)              # provincies alfabetisch sorteren
+
+# Bekijken
+View(bevolking_breed)
+```
+
+
 
 Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
 
