@@ -173,11 +173,12 @@ Both datasets are available on CBS StatLine. The dataset on the prices of houses
 
 ## 2.3 Describe the type of variables included
 
-Think of things like:
+Both datasets mostly have social economic variables (SES). The house price dataset measures the average sale price of existing houses and the price index of these sales. This is an indicator of the accessibility of the housing market in the Netherlands. The dataset on the income of households measures the average income of households per province, as a benchmark for wealth in that region. 
 
--   Do the variables contain health information or SES information?
+The data originates from administrative sources, not interviews or questionnaires. The average house prices are based on the ‘Basisregistratie Kadaster’, in which every official sale of a house is recorded by law. The data on the income of households are deduced from tax returns and benefit registrations, processed by the CBS into regional stats. 
 
--   Have they been measured by interviewing individuals or is the data coming from administrative sources?
+Administrative data mostly doesn’t suffer from non-responses and measurement errors. A possible challenge is the fact that administrative definitions change over time; income can be defined differently from one year onto the next. This could affect the comparability over the years.
+
 
 
 # Part 3 - Quantifying
@@ -499,4 +500,7 @@ Provide the to your PUBLIC repository here: ...
 
 ## 5.2 Reference list
 
-Use APA referencing throughout your document.
+Centraal Bureau voor de Statistiek (2024). Inkomen van huishoudens; huishoudenskenmerken, regio [Dataset]. CBS. https://opendata.cbs.nl/#/CBS/nl/dataset/86004NED/table
+
+Centraal Bureau voor de Statistiek. (2026). Bestaande koopwoningen; verkoopprijzen prijsindex 2020=100 [Dataset]. CBS. https://opendata.cbs.nl/#/CBS/nl/dataset/85773NED/table
+
