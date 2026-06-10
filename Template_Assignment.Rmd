@@ -249,6 +249,19 @@ gem_huizenprijs_per_provincie <- readRDS("goede data/gem_huizenprijs_per_provinc
 write.csv(gem_huizenprijs_per_provincie, "goede data/goedehuizenprijsenperprov.csv", row.names = FALSE)
 ```
 
+```{r}
+library(tidyverse)
+bevolkingsdichtheid <- bevolkingsdichtheid %>% filter(V1 != "Regionale kerncijfers Nederland")
+bevolkingsdichtheid <- bevolkingsdichtheid %>% filter(V1 != "Perioden")
+bevolkingsdichtheid <- bevolkingsdichtheid %>% filter(V1 != "Onderwerp")
+bevolkingsdichtheid <- bevolkingsdichtheid %>% filter(V1 != "2024")
+bevolkingsdichtheid <- bevolkingsdichtheid %>% filter(V1 != "Bron: CBS")
+bevolkingsdichtheid$...1 <- NULL
+
+write.csv(bevolkingsdichtheid, "goede data/goede_bevolkingsdichtheid.csv", row.names = FALSE)
+```
+
+
 
 ```{r}
 library(tidyverse)
