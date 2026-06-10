@@ -345,6 +345,58 @@ woningprijsprov_lang$id <- NULL
 write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv", row.names = FALSE)
 ```
 
+variabele 3:
+
+```{r}
+bevolkingsdichtheid_raw <- read.csv("goede data/goede_bevolkingsdichtheid.csv", header = FALSE)
+
+bevolkingsdichtheid_raw <- bevolkingsdichtheid_raw[2:6, 1:14]
+
+colnames(bevolkingsdichtheid_raw) <- c("jaar", "Nederland", "Groningen (PV)", "Fryslân (PV)",
+                                        "Drenthe (PV)", "Overijssel (PV)", "Flevoland (PV)",
+                                        "Gelderland (PV)", "Utrecht (PV)", "Noord-Holland (PV)",
+                                        "Zuid-Holland (PV)", "Zeeland (PV)", "Noord-Brabant (PV)",
+                                        "Limburg (PV)")
+
+bevolkingsdichtheid_raw <- bevolkingsdichtheid_raw[, !colnames(bevolkingsdichtheid_raw) %in% "Nederland"]
+
+bevolkingsdichtheid_lang <- reshape(bevolkingsdichtheid_raw,
+                                     varying = colnames(bevolkingsdichtheid_raw)[-1],
+                                     v.names = "bevolkingsdichtheid_per_provincie",
+                                     timevar = "Provincies",
+                                     times = colnames(bevolkingsdichtheid_raw)[-1],
+                                     direction = "long")
+
+bevolkingsdichtheid_lang$id <- NULL
+bevolkingsdichtheid_lang$jaar <- as.integer(bevolkingsdichtheid_lang$jaar)
+bevolkingsdichtheid_lang$bevolkingsdichtheid_per_provincie <- as.integer(bevolkingsdichtheid_lang$bevolkingsdichtheid_per_provincie)
+bevolkingsdichtheid_lang <- bevolkingsdichtheid_lang[bevolkingsdichtheid_lang$jaar %in% c(2020, 2021, 2022, 2023), ]
+
+huizenprijzen_raw <- read.csv("goede data/goedehuizenprijsenperprov.csv")
+huizenprijzen_raw <- huizenprijzen_raw[!grepl("Bron", huizenprijzen_raw$Regio.s), ]
+
+huizenprijzen_schoon <- data.frame(
+  Provincies = huizenprijzen_raw$Regio.s,
+  X2020 = huizenprijzen_raw$X2020,
+  X2021 = huizenprijzen_raw$X2021,
+  X2022 = huizenprijzen_raw$X2022,
+  X2023 = huizenprijzen_raw$X2023
+)
+
+huizenprijzen_lang <- reshape(huizenprijzen_schoon,
+                               varying = c("X2020", "X2021", "X2022", "X2023"),
+                               v.names = "gem_huizenprijs",
+                               timevar = "jaar",
+                               times = c(2020, 2021, 2022, 2023),
+                               direction = "long")
+
+huizenprijzen_lang$id <- NULL
+
+bevolking_huizen <- merge(bevolkingsdichtheid_lang, huizenprijzen_lang[, c("Provincies", "jaar", "gem_huizenprijs")], by = c("Provincies", "jaar"))
+
+write.csv(bevolking_huizen, "goede data/bevolkingsdichtheid_en_huizenprijzen_per_provincie.csv", row.names = FALSE)
+```
+
 ## 3.3 Visualize temporal variation
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
