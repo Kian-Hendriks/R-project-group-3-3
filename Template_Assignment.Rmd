@@ -15,7 +15,7 @@ install.packages("yaml")
 install.packages("rmarkdown")
 ```
 
-```{r packages}
+```{r packages, include=FALSE}
 require(tidyverse)
 require(rmarkdown)
 require(yaml)
@@ -26,8 +26,6 @@ require(yaml)
 
 
 Tutorial group 3.3 
-
-C. Schouwenaar
 
 # Part 1 - Identify a Social Problem
 
@@ -48,13 +46,7 @@ This project investigates the relationship between regional income growth and ho
 
 Preferably from a URL, but if not, make sure to download the data and store it in a shared location that you can load the data in from. Do not store the data in a folder you include in the Github repository!
 
-<<<<<<< HEAD
-Our data
-=======
- <<<<<<< HEAD
-=======
-
-```{r}
+```{r include=FALSE}
 
 
 
@@ -100,7 +92,7 @@ write.csv(X2023, "data/data2023.csv", row.names = FALSE)
 
 ```
 
-```{r}
+```{r include=FALSE}
 # prijswoningen <- read.csv(C:\Uni\Year 1\Period 6\Programming for Economics/gem_prijs_woning_prov)
 # Gem_prijs_woning_prov <- read.csv("goede data/woningprijsprov.csv")
 # write.csv(Gem_prijs_woning_prov, "goede data/woningprijsprov.csv")
@@ -109,7 +101,7 @@ write.csv(X2023, "data/data2023.csv", row.names = FALSE)
 
 ## joining
 
-```{r}
+```{r include=FALSE}
 
 
 data2015 <- read.csv("data/data2015.csv")
@@ -189,7 +181,13 @@ Think of things like:
 
 ## 3.1 Data cleaning
 Data cleaning codering datacombined15tot23goed.
-```{r}
+
+this is how we cleaned this data set: 
+```{r eval=FALSE, include=FALSE}
+names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...6"] <- "gem_st_inkomen_x_100"
+```
+
+```{r include=FALSE}
 datacombined15tot23goed <- read.csv("goede data/datacombined15tot23goed.csv")
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...6"] <- "gem_st_inkomen_x_100"
 names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...7"] <- "med_st_inkomen_x_100"
@@ -209,8 +207,13 @@ datacombined15tot23goed$X. <- NULL
 datacombined15tot23goed$...1 <- NULL
 
 ```
-Data cleaning codering woningprijsprov
-```{r}
+Data cleaning codering woningprijsprov:
+this is how we cleaned this dataset:
+```{r eval=FALSE, include=FALSE}
+woningprijsprov$`1995` <- format(woningprijsprov$`1995`, big.mark = ".", scientific = FALSE)
+```
+
+```{r include=FALSE}
 woningprijsprov <- read.csv("goede data/goedehuizenprijsenperprov.csv")
 woningprijsprov$`1995` <- format(woningprijsprov$`1995`, big.mark = ".", scientific = FALSE)
 woningprijsprov$`2000` <- format(woningprijsprov$`2000`, big.mark = ".", scientific = FALSE)
@@ -228,7 +231,7 @@ saveRDS(woningprijsprov, "goede data/gem_huizenprijs_per_provincie.RDS")
 
 ```
 
-```{r}
+```{r include=FALSE}
 gem_huizenprijs_per_provincie <- readRDS("goede data/gem_huizenprijs_per_provincie.RDS")
 write.csv(gem_huizenprijs_per_provincie, "goede data/goedehuizenprijsenperprov.csv", row.names = FALSE)
 ```
@@ -279,7 +282,7 @@ write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv",
 
 ## 3.3 Visualize temporal variation
 
-```{r}
+```{r include=FALSE}
 library(tidyverse)
 library(scales)
 
@@ -339,7 +342,7 @@ grafieken_tonen()
 ## 3.4 Visualize spatial variation
 
 
-```{r visualise_map}
+```{r visualise_map, include=FALSE}
 library(sf)
 library(ggplot2)
 
