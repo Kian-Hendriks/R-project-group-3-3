@@ -525,7 +525,36 @@ Here you provide a description of why the plot above is relevant to your specifi
 What is the poverty rate by state?
 
 ```{r visualise_subpopulations}
+# 1. Load the library
+library(tidyverse)
 
+# 2. Load the data
+df_provincies <- read.csv("goede data/bevolkingsdichtheid_en_huizenprijzen_per_provincie.csv", stringsAsFactors = FALSE)
+
+# 3. Clean the data and calculate averages
+df_plot <- df_provincies %>%
+  mutate(Provincies = str_remove(Provincies, " \\(PV\\)")) %>%
+  group_by(Provincies) %>%
+  summarise(
+    dichtheid = mean(bevolkingsdichtheid_per_provincie, na.rm = TRUE),
+    huizenprijs = mean(gem_huizenprijs, na.rm = TRUE)
+  ) %>%
+  # NEW: Drop any empty 'ghost rows' to prevent the warning message
+  drop_na(dichtheid, huizenprijs)
+
+# 4. The clean graph
+ggplot(data = df_plot, aes(x = dichtheid, y = huizenprijs, label = Provincies)) +
+  geom_smooth(method = "lm", formula = y ~ x, color = "darkred", linetype = "dashed", se = FALSE) +
+  geom_point(color = "steelblue", size = 3) +  
+  geom_text(vjust = -1.5, size = 3.5) +                 
+  scale_y_continuous(expand = expansion(mult = c(0.1, 0.2))) +
+  labs(
+    title = "Correlatie Bevolkingsdichtheid vs. Huizenprijzen (2020-2022)",
+    subtitle = "Met lineaire regressielijn",
+    x = "Bevolkingsdichtheid (inwoners per km²)",
+    y = "Gemiddelde huizenprijs"
+  ) +
+  theme_minimal()
 ```
 
 Here you provide a description of why the plot above is relevant to your specific social problem.
