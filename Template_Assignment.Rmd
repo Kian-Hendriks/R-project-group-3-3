@@ -267,7 +267,6 @@ write.csv(bevolkingsdichtheid, "goede data/goede_bevolkingsdichtheid.csv", row.n
 ```{r}
 library(tidyverse)
 
-# Data inladen
 bevolking <- read.csv(
   "data/Regionale_kerncijfers_Nederland_10062026_162325.csv",
   sep = ";",
@@ -276,10 +275,8 @@ bevolking <- read.csv(
   fileEncoding = "UTF-8-BOM"
 )
 
-# Kolom hernoemen
 names(bevolking)[3] <- "bevolkingsdichtheid_km2"
 
-# Opschonen en breed maken
 bevolking_breed <- bevolking %>%
   filter(Regio.s != "Nederland") %>%
   mutate(
@@ -287,12 +284,11 @@ bevolking_breed <- bevolking %>%
     bevolkingsdichtheid_km2 = as.numeric(bevolkingsdichtheid_km2)
   ) %>%
   pivot_wider(
-    names_from = Perioden,      # jaartallen worden kolomnamen
+    names_from = Perioden,     
     values_from = bevolkingsdichtheid_km2
   ) %>%
-  arrange(Regio.s)              # provincies alfabetisch sorteren
+  arrange(Regio.s)             
 
-# Bekijken
 View(bevolking_breed)
 ```
 
@@ -403,10 +399,8 @@ write.csv(bevolking_huizen, "goede data/bevolkingsdichtheid_en_huizenprijzen_per
 library(tidyverse)
 library(scales)
 
-# Data inladen
 df <- read.csv("goede data/randstad_vs_buiten_randstad.csv", stringsAsFactors = FALSE)
 
-# Cumulatieve groei berekenen
 df_plot <- df %>%
   arrange(regio, jaar) %>%
   group_by(regio) %>%
@@ -416,7 +410,6 @@ df_plot <- df %>%
   ) %>%
   ungroup()
 
-# Data omzetten naar lang formaat
 df_long <- df_plot %>%
   pivot_longer(cols = c(groei_huizen, groei_inkomen),
                names_to = "type",
@@ -425,7 +418,6 @@ df_long <- df_plot %>%
                        "groei_huizen" = "Huizenprijs",
                        "groei_inkomen" = "Inkomen"))
 
-# Functie voor grafiek
 maak_grafiek <- function(data, titel) {
   ggplot(data, aes(x = jaar, y = groei, color = type, linetype = type)) +
     geom_line(linewidth = 1) +
@@ -441,7 +433,6 @@ maak_grafiek <- function(data, titel) {
     theme(legend.position = "top")
 }
 
-# Automatisch beide grafieken tonen
 grafieken_tonen <- function() {
   print(maak_grafiek(
     df_long %>% filter(regio == "Randstad (incl. Flevoland)"),
@@ -459,7 +450,6 @@ grafieken_tonen()
 ## 3.4 Visualize spatial variation
 
 ```{r visualise_map, echo=FALSE, message=FALSE, warning=FALSE}
-#install.packages(c("sf", "ggplot2"))
 require(sf)
 require(ggplot2)
 nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson", quiet = TRUE)
@@ -486,10 +476,10 @@ ggplot(nl_map) +
     subtitle = "Average over 2015-2023"
   )
 
-# Stap 1: Kaart laden
+
 nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson", quiet = TRUE)
 
-# Stap 2: Jouw data
+
 my_data2 <- data.frame(
   Provincies = c("Groningen", "Fryslân", "Drenthe", "Overijssel", "Flevoland",
                  "Gelderland", "Utrecht", "Noord-Holland", "Zuid-Holland",
@@ -499,10 +489,8 @@ my_data2 <- data.frame(
                   280299.6, 360750.2, 283216.8)
 )
 
-# Stap 3: Samenvoegen
 nl_map <- merge(nl_map, my_data2, by.x = "statnaam", by.y = "Provincies")
 
-# Stap 4: Kaart plotten
 ggplot(nl_map) +
   geom_sf(aes(fill = huizenprijs)) +
   scale_fill_distiller(
@@ -525,13 +513,10 @@ Here you provide a description of why the plot above is relevant to your specifi
 What is the poverty rate by state?
 
 ```{r visualise_subpopulations}
-# 1. Load the library
 library(tidyverse)
 
-# 2. Load the data
 df_provincies <- read.csv("goede data/bevolkingsdichtheid_en_huizenprijzen_per_provincie.csv", stringsAsFactors = FALSE)
 
-# 3. Clean the data and calculate averages
 df_plot <- df_provincies %>%
   mutate(Provincies = str_remove(Provincies, " \\(PV\\)")) %>%
   group_by(Provincies) %>%
@@ -539,10 +524,8 @@ df_plot <- df_provincies %>%
     dichtheid = mean(bevolkingsdichtheid_per_provincie, na.rm = TRUE),
     huizenprijs = mean(gem_huizenprijs, na.rm = TRUE)
   ) %>%
-  # NEW: Drop any empty 'ghost rows' to prevent the warning message
   drop_na(dichtheid, huizenprijs)
 
-# 4. The clean graph
 ggplot(data = df_plot, aes(x = dichtheid, y = huizenprijs, label = Provincies)) +
   geom_smooth(method = "lm", formula = y ~ x, color = "darkred", linetype = "dashed", se = FALSE) +
   geom_point(color = "steelblue", size = 3) +  
