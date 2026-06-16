@@ -567,4 +567,3 @@ Provide the to your PUBLIC repository here: ...
 Centraal Bureau voor de Statistiek (2024). Inkomen van huishoudens; huishoudenskenmerken, regio [Dataset]. CBS. https://opendata.cbs.nl/#/CBS/nl/dataset/86004NED/table
 
 Centraal Bureau voor de Statistiek. (2026). Bestaande koopwoningen; verkoopprijzen prijsindex 2020=100 [Dataset]. CBS. https://opendata.cbs.nl/#/CBS/nl/dataset/85773NED/table
-
