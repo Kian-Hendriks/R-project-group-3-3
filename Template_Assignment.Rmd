@@ -272,15 +272,28 @@ write.csv(bevolkingsdichtheid, "goede data/goede_bevolkingsdichtheid.csv", row.n
 ```{r}
 library(tidyverse)
 
-bevolking <- read.csv(
+# Het CBS-bestand is 'breed' en heeft 6 koprijen: titel, 2 lege regels,
+# 'Onderwerp', de provincienamen (rij 5) en de eenheid (rij 6). De data
+# beginnen pas op rij 7. Daarom lezen we zonder header en bouwen we zelf
+# een lang bestand met de kolommen Perioden / Regio.s / dichtheid.
+ruw <- read.csv(
   "data/regionale_kerncijfers.csv",
   sep = ";",
-  header = TRUE,
+  header = FALSE,
   strip.white = TRUE,
   fileEncoding = "UTF-8-BOM"
 )
 
-names(bevolking)[3] <- "bevolkingsdichtheid_km2"
+provincienamen <- as.character(unlist(ruw[5, -1]))
+bevolking <- ruw[7:nrow(ruw), ]
+colnames(bevolking) <- c("Perioden", provincienamen)
+
+bevolking <- bevolking %>%
+  pivot_longer(
+    cols = -Perioden,
+    names_to = "Regio.s",
+    values_to = "bevolkingsdichtheid_km2"
+  )
 
 bevolking_breed <- bevolking %>%
   filter(Regio.s != "Nederland") %>%
@@ -294,7 +307,7 @@ bevolking_breed <- bevolking %>%
   ) %>%
   arrange(Regio.s)             
 
-View(bevolking_breed)
+head(bevolking_breed)   # View() werkt niet tijdens het knitten
 ```
 
 
