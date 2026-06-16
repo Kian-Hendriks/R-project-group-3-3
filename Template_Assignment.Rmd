@@ -21,6 +21,12 @@ require(rmarkdown)
 require(yaml)
 ```
 
+```{r setup, include=FALSE}
+# Hide code by default in the rendered PDF. The chunks we want to present
+# (the visualisations) switch this back on with echo = TRUE.
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
 # Regional Income Growth and House Price Dynamics in the Netherlands
 
 Vincent, Joris, Vincent, Thies, Kian & Julius
@@ -269,13 +275,13 @@ write.csv(bevolkingsdichtheid, "goede data/goede_bevolkingsdichtheid.csv", row.n
 
 
 
-```{r}
+```{r include=FALSE}
 library(tidyverse)
 
-# Het CBS-bestand is 'breed' en heeft 6 koprijen: titel, 2 lege regels,
-# 'Onderwerp', de provincienamen (rij 5) en de eenheid (rij 6). De data
-# beginnen pas op rij 7. Daarom lezen we zonder header en bouwen we zelf
-# een lang bestand met de kolommen Perioden / Regio.s / dichtheid.
+# The CBS file is in 'wide' format and has 6 header rows: a title, 2 blank
+# lines, 'Onderwerp', the province names (row 5) and the unit (row 6). The
+# actual data only start on row 7. We therefore read it without a header and
+# build a long table ourselves with the columns Perioden / Regio.s / density.
 ruw <- read.csv(
   "data/regionale_kerncijfers.csv",
   sep = ";",
@@ -307,7 +313,7 @@ bevolking_breed <- bevolking %>%
   ) %>%
   arrange(Regio.s)             
 
-head(bevolking_breed)   # View() werkt niet tijdens het knitten
+head(bevolking_breed)   # View() does not work while knitting
 ```
 
 
@@ -359,7 +365,7 @@ woningprijsprov_lang$id <- NULL
 write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv", row.names = FALSE)
 ```
 
-variabele 3:
+Variable 3:
 
 ```{r}
 bevolkingsdichtheid_raw <- read.csv("goede data/goede_bevolkingsdichtheid.csv", header = FALSE)
@@ -413,7 +419,7 @@ write.csv(bevolking_huizen, "goede data/bevolkingsdichtheid_en_huizenprijzen_per
 
 ## 3.3 Visualize temporal variation
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(scales)
 
@@ -433,8 +439,8 @@ df_long <- df_plot %>%
                names_to = "type",
                values_to = "groei") %>%
   mutate(type = recode(type,
-                       "groei_huizen" = "Huizenprijs",
-                       "groei_inkomen" = "Inkomen"))
+                       "groei_huizen" = "House price",
+                       "groei_inkomen" = "Income"))
 
 maak_grafiek <- function(data, titel) {
   ggplot(data, aes(x = jaar, y = groei, color = type, linetype = type)) +
@@ -443,9 +449,9 @@ maak_grafiek <- function(data, titel) {
     geom_hline(yintercept = 0, linetype = "dotted", color = "grey40") +
     scale_y_continuous(labels = percent_format(accuracy = 1)) +
     scale_x_continuous(breaks = c(2020, 2021, 2022, 2023)) +
-    scale_color_manual(values = c("Huizenprijs" = "steelblue", "Inkomen" = "orange")) +
-    scale_linetype_manual(values = c("Huizenprijs" = "solid", "Inkomen" = "dashed")) +
-    labs(title = titel, x = "Jaar", y = "Groei t.o.v. 2020",
+    scale_color_manual(values = c("House price" = "steelblue", "Income" = "orange")) +
+    scale_linetype_manual(values = c("House price" = "solid", "Income" = "dashed")) +
+    labs(title = titel, x = "Year", y = "Growth vs. 2020",
          color = "", linetype = "") +
     theme_minimal() +
     theme(legend.position = "top")
@@ -454,11 +460,11 @@ maak_grafiek <- function(data, titel) {
 grafieken_tonen <- function() {
   print(maak_grafiek(
     df_long %>% filter(regio == "Randstad (incl. Flevoland)"),
-    "Groei Randstad t.o.v. 2020"
+    "Growth Randstad vs. 2020"
   ))
   print(maak_grafiek(
     df_long %>% filter(regio == "Buiten Randstad"),
-    "Groei Buiten Randstad t.o.v. 2020"
+    "Growth outside the Randstad vs. 2020"
   ))
 }
 
@@ -467,7 +473,7 @@ grafieken_tonen()
 
 ## 3.4 Visualize spatial variation
 
-```{r visualise_map, echo=FALSE, message=FALSE, warning=FALSE}
+```{r visualise_map, echo=TRUE, message=FALSE, warning=FALSE}
 require(sf)
 require(ggplot2)
 nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson", quiet = TRUE)
@@ -486,12 +492,12 @@ ggplot(nl_map) +
   scale_fill_distiller(
     palette = "Blues",
     direction = 1,        # 1 = darker means higher value
-    name = "Average spendable income (x100 €)"
+    name = "Mean spendable income (x100 €)"
   ) +
   theme_void() +
   labs(
-    title = "Average Spendable Income per Province",
-    subtitle = "Average Between 2015-2023"
+    title = "Mean Spendable Income per Province",
+    subtitle = "Average over 2015-2023"
   )
 
 
@@ -514,13 +520,13 @@ ggplot(nl_map) +
   scale_fill_distiller(
     palette = "Greens",
     direction = 1,
-    name = "Avg. Houseprice (€)",
+    name = "Avg. house price (€)",
     labels = scales::comma
   ) +
   theme_void() +
   labs(
-    title = "Average Houseprice per Province",
-    subtitle = "Average between 2015-2023"
+    title = "Average House Price per Province",
+    subtitle = "Average over the most recent years"
   )
 ```
 
@@ -530,7 +536,7 @@ Here you provide a description of why the plot above is relevant to your specifi
 
 What is the poverty rate by state?
 
-```{r visualise_subpopulations}
+```{r visualise_subpopulations, echo=TRUE, message=FALSE, warning=FALSE}
 library(tidyverse)
 
 df_provincies <- read.csv("goede data/bevolkingsdichtheid_en_huizenprijzen_per_provincie.csv", stringsAsFactors = FALSE)
@@ -550,10 +556,10 @@ ggplot(data = df_plot, aes(x = dichtheid, y = huizenprijs, label = Provincies)) 
   geom_text(vjust = -1.5, size = 3.5) +                 
   scale_y_continuous(expand = expansion(mult = c(0.1, 0.2))) +
   labs(
-    title = "Correlatie Bevolkingsdichtheid vs. Huizenprijzen (2020-2022)",
-    subtitle = "Met lineaire regressielijn",
-    x = "Bevolkingsdichtheid (inwoners per km²)",
-    y = "Gemiddelde huizenprijs"
+    title = "Correlation Population Density vs. House Prices (2020-2022)",
+    subtitle = "With linear regression line",
+    x = "Population density (inhabitants per km²)",
+    y = "Average house price"
   ) +
   theme_minimal()
 ```
