@@ -180,21 +180,17 @@ saveRDS(datacombined15tot23, "goede data/datacombi1523.rds")
 
 ## 2.2 Provide a short summary of the dataset(s)
 
-For this study three datasets from the Centraal Bureau voor de Statistiek (CBS) were used. The first dataset, Bestaande koopwoningen; verkoopprijzen prijsindex 2020=100 (85773NED), contains data on the variables ‘gemiddelde verkoopprijs van bestaande koopwoningen en bijbehorende prijsindex op provinciaal niveau’. The second dataset, inkomen van huishoudens; huishoudenskenmerken, regio (86004NED), contains information on the ‘gemiddelde inkomen van huishoudens, op provinciaal niveau’. Lastly, the third dataset, bevolkingsdichtheid op 1 januari(70072NED), contains information on the population density in the Netherlands. 
+For this study three datasets from the Centraal Bureau voor de Statistiek (CBS) were used. The first dataset, Bestaande koopwoningen; verkoopprijzen prijsindex 2020=100, contains data on the variables ‘gemiddelde verkoopprijs van bestaande koopwoningen en bijbehorende prijsindex op provinciaal niveau’. The second dataset, inkomen van huishoudens; huishoudenskenmerken, regio, contains information on the ‘gemiddelde inkomen van huishoudens, op provinciaal niveau’. Lastly, the third dataset, bevolkingsdichtheid, contains information on the population density in the Netherlands. 
 
-All datasets are available on CBS StatLine. The dataset on the prices of houses spans from 2015 until 2025, the dataset on income only covers 2015 until 2023 (In order to see other years or regions, the filter option should be used to select the desired years). The dataset on population density in the Netherlands spans from 1995 until 2025. For the analysis in this research the overlapping years of 2015-2023(or a part thereof) are studied.
+All datasets are available on CBS StatLine. The dataset on the prices of houses spans from 2015 until 2025, the dataset on income only covers 2015 until 2023. The dataset on population density in the Netherlands spans from 1995 until 2025. For the analysis in this research the overlapping years of 2015-2023(or a part thereof) are studied.
 
 
 
 ## 2.3 Describe the type of variables included
 
-The datasets mostly have social economic variables (SES). The house price dataset measures the average sale price of existing houses and the price index of these sales. This is an indicator of the accessibility of the housing market in the Netherlands. The dataset on the income of households measures the average income of households per province, as a benchmark for wealth in that region. The dataset on population density, again, is based on administrative data. It measures the amount of inhabitants per square kilometer in every province.
+The datasets mostly have social economic variables . The house price dataset measures the average sale price of existing houses and the price index of these sales. This is an indicator of the accessibility of the housing market in the Netherlands. The dataset on the income of households measures the average income of households per province, as a benchmark for wealth in that region. The dataset on population density, again, is based on administrative data. It measures the amount of inhabitants per square kilometer in every province.
 
 The data originates from administrative sources, not interviews or questionnaires. The average house prices are based on the ‘Basisregistratie Kadaster’, in which every official sale of a house is recorded by law. The data on the income of households are deduced from tax returns and benefit registrations, processed by the CBS into regional stats. The data on population density is computed by dividing the amount of inhabitants officially listed by the amount of square kilometers in the region.
-
-Administrative data mostly doesn’t suffer from non-responses and measurement errors. A possible challenge is the fact that administrative definitions change over time; income can be defined differently from one year onto the next. This could affect the comparability over the years.
-
-
 
 
 # Part 3 - Quantifying
@@ -322,10 +318,6 @@ bevolking_breed <- bevolking %>%
 head(bevolking_breed)   # View() does not work while knitting
 ```
 
-
-
-Please use a separate 'R block' of code for each type of cleaning. So, e.g. one for missing values, a new one for removing unnecessary variables etc.
-
 ## 3.2 Generate necessary variables
 
 **Variable 1 -- average disposable income per province**
@@ -358,9 +350,9 @@ write.csv(gem_inkomen_provincie, "goede data/gem_inkomen_provincie.csv", row.nam
 For the second variable we grouped the provinces into two regions, the Randstad (including
 Flevoland) and the rest of the country, and computed the average income and average house
 price for each region per year. This required reshaping the house-price dataset from wide
-to long format (one row per province per year) and merging it with the income data, so that
+to long format and merging it with the income data, so that
 income and house prices could be compared on the same regional and yearly basis. This
-variable lets us contrast the economically dense Randstad with the peripheral provinces.
+variable lets us contrast the economically dense Randstad with the other provinces.
 ```{r gen_var2}
 woningprijsprov <- read.csv("goede data/goedehuizenprijsenperprov.csv", check.names = FALSE)
 
@@ -383,13 +375,13 @@ write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv",
 
 **Variable 3 -- population density and house price per province**
 <!-- DRAFT: verify & adjust -->
-The third variable combines population density with the average house price for each
+The third variable that we created combines population density with the average house price for each
 province per year (2020--2023). We reshaped both the density data and the house-price data
 to long format and merged them on province and year, producing
 `bevolkingsdichtheid_en_huizenprijzen_per_provincie`. This variable allows us to test
 whether more densely populated provinces also have higher house prices (used in section
-3.5). A fourth variable, the price-to-income ratio, is generated later in the event
-analysis (section 3.6).
+3.5). We also created afourth variable, the price-to-income ratio, wich you can see later in the assignment
+ (section 3.6).
 
 ```{r}
 bevolkingsdichtheid_raw <- read.csv("goede data/goede_bevolkingsdichtheid.csv", header = FALSE)
@@ -495,13 +487,12 @@ grafieken_tonen <- function() {
 grafieken_tonen()
 ```
 
-<!-- DRAFT: verify & adjust -->
 These two graphs show the growth of house prices and disposable income relative to 2020,
 for the Randstad and for the rest of the country. In both regions house prices rose much
 faster than income: prices climbed by roughly 15% in 2021 and another 11% in 2022, while
-income grew by only about 4% to 5% per year. The gap between the two lines -- the widening
-distance between housing costs and what people earn -- is exactly the affordability problem
-central to this report, and it is visibly larger in the Randstad than outside it.
+income grew by only about 4% to 5% per year. The gap between the two lines (the widening
+distance between housing costs and what people earn) is exactly the affordability problem
+central to this assignment, and it is visibly larger in the Randstad than outside it.
 
 ## 3.4 Visualize spatial variation
 
@@ -562,7 +553,6 @@ ggplot(nl_map) +
   )
 ```
 
-<!-- DRAFT: verify & adjust -->
 The two maps show the spatial distribution of, respectively, average disposable income and
 the average house price per province. The highest incomes and the highest house prices both
 concentrate in the same central provinces (Utrecht and Noord-Holland), while the peripheral
@@ -601,18 +591,17 @@ ggplot(data = df_plot, aes(x = dichtheid, y = huizenprijs, label = Provincies)) 
   theme_minimal()
 ```
 
-<!-- DRAFT: verify & adjust -->
 This scatter plot relates population density to the average house price per province, with
 a linear regression line added. The upward slope shows a clear positive association: more
 densely populated provinces tend to have higher house prices. This is relevant to our
 social problem because it indicates that scarcity of space, not just income, drives prices
-up -- precisely in the crowded provinces where most people want or need to live, housing is
+up, we  can see that precisely in the crowded provinces where most people want or need to live, housing is
 least affordable.
 
 ## 3.6 Event analysis
 
 For the event analysis we study the relationship between two variables -- average
-disposable household income and the average house price -- around a clear event: the
+disposable household income and the average house price around a clear event: the
 turn in mortgage interest rates in 2022. To do this we generate a fourth variable, the
 **price-to-income ratio** (average house price divided by average yearly disposable
 income), which can be read as "the number of years of income needed to buy an average
@@ -657,21 +646,12 @@ ggplot(ratio_data, aes(x = jaar, y = verhouding_prijs_inkomen,
   theme_minimal() +
   theme(legend.position = "top")
 
-# Alternative (swap in if you prefer a classic association scatter instead of the
-# time/event view): per-province average income on the x-axis and average house price
-# on the y-axis with a regression line.
-# inc <- read.csv("goede data/datacombined15tot23goed.csv")
-# hp  <- read.csv("goede data/bevolkingsdichtheid_en_huizenprijzen_per_provincie.csv")
-# assoc <- merge(aggregate(gem_bstb_inkomen_x_100 ~ Provincies, inc, mean),
-#                aggregate(gem_huizenprijs ~ Provincies, hp, mean), by = "Provincies")
-# ggplot(assoc, aes(gem_bstb_inkomen_x_100 * 100, gem_huizenprijs * 1000)) +
-#   geom_smooth(method = "lm", se = FALSE) + geom_point()
+
 ```
 
-<!-- DRAFT: verify numbers & adjust -->
 This event analysis is central to our social problem. Between 2020 and 2022 the
-price-to-income ratio rose in both regions -- from about 7.6 to 8.8 years of income in the
-Randstad and from 6.3 to 7.4 outside it -- meaning houses became steadily less affordable
+price-to-income ratio rose in both regions, from about 7.6 to 8.8 years of income in the
+Randstad and from 6.3 to 7.4 outside it, meaning houses became steadily less affordable
 relative to local income. After the 2022 interest-rate turn the ratio falls again in 2023
 (prices declined by roughly 1% to 5% while incomes kept rising by about 7%). The fact that
 affordability moves with the financing event rather than with local income growth suggests
@@ -681,7 +661,6 @@ purchasing power -- and that the affordability gap is structurally largest in th
 # Part 4 - Discussion
 
 ## 4.1 Discuss your findings
-<!-- DRAFT: verify & adjust -->
 Our analysis points to one consistent pattern: across Dutch provinces, house prices have
 grown considerably faster than disposable income, so housing has become less affordable
 almost everywhere. The decoupling is strongest in the Randstad, where the price-to-income
