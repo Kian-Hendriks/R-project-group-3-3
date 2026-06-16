@@ -256,6 +256,7 @@ write.csv(gem_huizenprijs_per_provincie, "goede data/goedehuizenprijsenperprov.c
 
 ```{r}
 library(tidyverse)
+bevolkingsdichtheid <- Bev_dichtheid
 bevolkingsdichtheid <- bevolkingsdichtheid %>% filter(V1 != "Regionale kerncijfers Nederland")
 bevolkingsdichtheid <- bevolkingsdichtheid %>% filter(V1 != "Perioden")
 bevolkingsdichtheid <- bevolkingsdichtheid %>% filter(V1 != "Onderwerp")
@@ -272,7 +273,7 @@ write.csv(bevolkingsdichtheid, "goede data/goede_bevolkingsdichtheid.csv", row.n
 library(tidyverse)
 
 bevolking <- read.csv(
-  "data/Regionale_kerncijfers_Nederland_10062026_162325.csv",
+  "data/regionale_kerncijfers.csv",
   sep = ";",
   header = TRUE,
   strip.white = TRUE,
