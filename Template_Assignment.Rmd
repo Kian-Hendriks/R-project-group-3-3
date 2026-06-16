@@ -50,8 +50,14 @@ This project investigates the relationship between regional income growth and ho
 # Part 2 - Data Sourcing
 
 ## 2.1 Load in the data
-we used 9 different data sets and combined we did this using this code for each
-first we cleaned the already existing datasets. aand combined everything together using this code: datacombined15tot23 <- rbind(Data15161718, data2019, data2020, data2021, data2022, data2023).
+<!-- DRAFT: verify & adjust -->
+For the income data we used nine separate CBS files, one for each year from 2015 to 2023.
+After cleaning each file individually (removing empty helper columns and adding a `jaar`
+year column), the files were combined row-wise into a single dataset with
+`rbind()`, ending in `datacombined15tot23 <- rbind(Data15161718, data2019, data2020,
+data2021, data2022, data2023)`. This income dataset was then merged with the house-price
+data (per province) and the population-density data, so that every observation is a
+province in a given year.
 
 ```{r include=FALSE}
 
@@ -322,10 +328,16 @@ Please use a separate 'R block' of code for each type of cleaning. So, e.g. one 
 
 ## 3.2 Generate necessary variables
 
-Variable 1
-creating new variable 1, we have created the average disposable income of each province over 8 years. using the data set: gem_inkomen_provincie, We used the following code for this:
-gem_inkomen_provincie <- aggregate(gem_bstb_inkomen_x_100 ~ Provincies, 
-                                    data = datacombined15tot23goed, 
+**Variable 1 -- average disposable income per province**
+<!-- DRAFT: verify & adjust -->
+Our first generated variable is the average disposable household income per province,
+averaged over the years 2015--2023. We created it by aggregating the cleaned income
+dataset (`datacombined15tot23goed`) with `aggregate()`, taking the mean of
+`gem_bstb_inkomen_x_100` for each province. The result (`gem_inkomen_provincie`) gives one
+income figure per province and serves as a stable benchmark of regional purchasing power,
+which we later compare against house prices. The code used was:
+gem_inkomen_provincie <- aggregate(gem_bstb_inkomen_x_100 ~ Provincies,
+                                    data = datacombined15tot23goed,
                                     FUN = mean)
 
 ```{r gen_var1, include=FALSE}
@@ -341,10 +353,14 @@ colnames(gem_inkomen_provincie)[colnames(gem_inkomen_provincie) == "gem_bstb_ink
 write.csv(gem_inkomen_provincie, "goede data/gem_inkomen_provincie.csv", row.names = FALSE)
 ```
 
-Variable 2
-creating new variable 2 using the original dataset: datacombined15tot23goed, in which we represented the weighted averages of income for different provinces: inside and outside the Randstad.
-
-adjust the format of the current cleaned dataset in order to continue working with a renewed dataset, and also a renewed dataset, because for this new variable we actually need to merge our two datasets.
+**Variable 2 -- Randstad versus outside the Randstad**
+<!-- DRAFT: verify & adjust -->
+For the second variable we grouped the provinces into two regions, the Randstad (including
+Flevoland) and the rest of the country, and computed the average income and average house
+price for each region per year. This required reshaping the house-price dataset from wide
+to long format (one row per province per year) and merging it with the income data, so that
+income and house prices could be compared on the same regional and yearly basis. This
+variable lets us contrast the economically dense Randstad with the peripheral provinces.
 ```{r gen_var2}
 woningprijsprov <- read.csv("goede data/goedehuizenprijsenperprov.csv", check.names = FALSE)
 
@@ -365,7 +381,15 @@ woningprijsprov_lang$id <- NULL
 write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv", row.names = FALSE)
 ```
 
-Variable 3:
+**Variable 3 -- population density and house price per province**
+<!-- DRAFT: verify & adjust -->
+The third variable combines population density with the average house price for each
+province per year (2020--2023). We reshaped both the density data and the house-price data
+to long format and merged them on province and year, producing
+`bevolkingsdichtheid_en_huizenprijzen_per_provincie`. This variable allows us to test
+whether more densely populated provinces also have higher house prices (used in section
+3.5). A fourth variable, the price-to-income ratio, is generated later in the event
+analysis (section 3.6).
 
 ```{r}
 bevolkingsdichtheid_raw <- read.csv("goede data/goede_bevolkingsdichtheid.csv", header = FALSE)
@@ -471,6 +495,14 @@ grafieken_tonen <- function() {
 grafieken_tonen()
 ```
 
+<!-- DRAFT: verify & adjust -->
+These two graphs show the growth of house prices and disposable income relative to 2020,
+for the Randstad and for the rest of the country. In both regions house prices rose much
+faster than income: prices climbed by roughly 15% in 2021 and another 11% in 2022, while
+income grew by only about 4% to 5% per year. The gap between the two lines -- the widening
+distance between housing costs and what people earn -- is exactly the affordability problem
+central to this report, and it is visibly larger in the Randstad than outside it.
+
 ## 3.4 Visualize spatial variation
 
 ```{r visualise_map, echo=TRUE, message=FALSE, warning=FALSE}
@@ -530,11 +562,16 @@ ggplot(nl_map) +
   )
 ```
 
-Here you provide a description of why the plot above is relevant to your specific social problem.
+<!-- DRAFT: verify & adjust -->
+The two maps show the spatial distribution of, respectively, average disposable income and
+the average house price per province. The highest incomes and the highest house prices both
+concentrate in the same central provinces (Utrecht and Noord-Holland), while the peripheral
+provinces (Groningen, Zeeland, Drenthe) score low on both. However, house prices rise more
+steeply than income across the map, so the regions that are already expensive become
+relatively even less accessible. This spatial inequality in access to housing is the core
+of our social problem.
 
 ## 3.5 Visualize sub-population variation
-
-What is the poverty rate by state?
 
 ```{r visualise_subpopulations, echo=TRUE, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -564,27 +601,115 @@ ggplot(data = df_plot, aes(x = dichtheid, y = huizenprijs, label = Provincies)) 
   theme_minimal()
 ```
 
-Here you provide a description of why the plot above is relevant to your specific social problem.
+<!-- DRAFT: verify & adjust -->
+This scatter plot relates population density to the average house price per province, with
+a linear regression line added. The upward slope shows a clear positive association: more
+densely populated provinces tend to have higher house prices. This is relevant to our
+social problem because it indicates that scarcity of space, not just income, drives prices
+up -- precisely in the crowded provinces where most people want or need to live, housing is
+least affordable.
 
 ## 3.6 Event analysis
 
-Analyze the relationship between two variables.
+For the event analysis we study the relationship between two variables -- average
+disposable household income and the average house price -- around a clear event: the
+turn in mortgage interest rates in 2022. To do this we generate a fourth variable, the
+**price-to-income ratio** (average house price divided by average yearly disposable
+income), which can be read as "the number of years of income needed to buy an average
+house". The plot below shows this ratio over time for the Randstad and the rest of the
+country, with the 2022 event marked.
 
-```{r analysis}
+```{r analysis, echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
 
+# New variable (variable 4): price-to-income ratio = average house price (in euro)
+# divided by the average yearly disposable income (in euro). We use the regional
+# dataset, which already contains both income (in euro) and the house price (x1000 euro).
+ratio_data <- read.csv("goede data/randstad_vs_buiten_randstad.csv",
+                       stringsAsFactors = FALSE)
+
+ratio_data <- ratio_data %>%
+  mutate(
+    huizenprijs_euro = gem_huizenprijs * 1000,
+    verhouding_prijs_inkomen = huizenprijs_euro / gem_bstb_inkomen_euro
+  )
+
+write.csv(ratio_data, "goede data/verhouding_prijs_inkomen.csv", row.names = FALSE)
+
+# Event association plot: the ratio over time, with the 2022 interest-rate turn marked.
+ggplot(ratio_data, aes(x = jaar, y = verhouding_prijs_inkomen,
+                       color = regio, linetype = regio)) +
+  geom_vline(xintercept = 2022, linetype = "dashed", color = "grey50") +
+  annotate("text", x = 2022, y = min(ratio_data$verhouding_prijs_inkomen),
+           label = "Interest-rate turn (event)", angle = 90,
+           vjust = -0.5, hjust = 0, size = 3, color = "grey40") +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2.5) +
+  scale_x_continuous(breaks = c(2020, 2021, 2022, 2023)) +
+  scale_color_manual(values = c("Randstad (incl. Flevoland)" = "steelblue",
+                                "Buiten Randstad" = "orange")) +
+  labs(
+    title = "Price-to-income ratio per region around the 2022 event",
+    subtitle = "Years of disposable income needed to buy an average house",
+    x = "Year", y = "House price / yearly income",
+    color = "", linetype = ""
+  ) +
+  theme_minimal() +
+  theme(legend.position = "top")
+
+# Alternative (swap in if you prefer a classic association scatter instead of the
+# time/event view): per-province average income on the x-axis and average house price
+# on the y-axis with a regression line.
+# inc <- read.csv("goede data/datacombined15tot23goed.csv")
+# hp  <- read.csv("goede data/bevolkingsdichtheid_en_huizenprijzen_per_provincie.csv")
+# assoc <- merge(aggregate(gem_bstb_inkomen_x_100 ~ Provincies, inc, mean),
+#                aggregate(gem_huizenprijs ~ Provincies, hp, mean), by = "Provincies")
+# ggplot(assoc, aes(gem_bstb_inkomen_x_100 * 100, gem_huizenprijs * 1000)) +
+#   geom_smooth(method = "lm", se = FALSE) + geom_point()
 ```
 
-Here you provide a description of why the plot above is relevant to your specific social problem.
+<!-- DRAFT: verify numbers & adjust -->
+This event analysis is central to our social problem. Between 2020 and 2022 the
+price-to-income ratio rose in both regions -- from about 7.6 to 8.8 years of income in the
+Randstad and from 6.3 to 7.4 outside it -- meaning houses became steadily less affordable
+relative to local income. After the 2022 interest-rate turn the ratio falls again in 2023
+(prices declined by roughly 1% to 5% while incomes kept rising by about 7%). The fact that
+affordability moves with the financing event rather than with local income growth suggests
+that house prices in this period were driven more by mortgage conditions than by regional
+purchasing power -- and that the affordability gap is structurally largest in the Randstad.
 
 # Part 4 - Discussion
 
 ## 4.1 Discuss your findings
+<!-- DRAFT: verify & adjust -->
+Our analysis points to one consistent pattern: across Dutch provinces, house prices have
+grown considerably faster than disposable income, so housing has become less affordable
+almost everywhere. The decoupling is strongest in the Randstad, where the price-to-income
+ratio is both the highest and the fastest-rising, but the peripheral provinces follow the
+same direction. The spatial analysis shows that high prices cluster in the same densely
+populated, high-income provinces, yet because prices outrun income, even relatively wealthy
+regions face an affordability gap.
+
+The event analysis adds an important nuance. The affordability ratio peaks in 2022 and then
+falls in 2023, mirroring the turn in mortgage interest rates rather than any change in local
+income. This suggests that the recent price dynamics were driven more by financing
+conditions than by regional purchasing power, which means affordability could deteriorate
+again quickly if borrowing becomes cheaper.
+
+Several limitations should be kept in mind. The overlapping window in which we have both
+income and house-price data per province is short (2020--2023), so the trends rest on few
+observations and should be read as indicative rather than conclusive. Administrative income
+definitions can change between years, which may affect comparability, and the analysis
+covers only the twelve provinces, so within-province differences (e.g. between cities and
+rural areas) are hidden. Finally, our results show association, not causation: income and
+house prices move together, but both are likely influenced by common drivers such as
+interest rates and the supply of housing.
 
 # Part 5 - Reproducibility
 
 ## 5.1 Github repository link
 
-Provide the to your PUBLIC repository here: ...
+Provide the link to your PUBLIC repository here: <!-- paste public repo URL -->
 
 ## 5.2 Reference list
 

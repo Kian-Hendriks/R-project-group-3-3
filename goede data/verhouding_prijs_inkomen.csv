@@ -1,0 +1,9 @@
+"jaar","regio","gem_bstb_inkomen_euro","gem_huizenprijs","inkomensstijging_pct","huizenprijsstijging_pct","huizenprijs_euro","verhouding_prijs_inkomen"
+2020,"Buiten Randstad",44187.5,278.688625,NA,NA,278688.625,6.30695615275813
+2021,"Buiten Randstad",46112.5,321.92075,4.36,15.51,321920.75,6.98120357820548
+2022,"Buiten Randstad",48575,358.8755,5.34,11.48,358875.5,7.38806999485332
+2023,"Buiten Randstad",52212.5,355.28125,7.49,-1,355281.25,6.8045247785492
+2020,"Randstad (incl. Flevoland)",48025,366.22025,NA,NA,366220.25,7.62561686621551
+2021,"Randstad (incl. Flevoland)",50325,421.75175,4.79,15.16,421751.75,8.38056135121709
+2022,"Randstad (incl. Flevoland)",53200,469.56325,5.71,11.34,469563.25,8.82637687969925
+2023,"Randstad (incl. Flevoland)",57025,447.2425,7.19,-4.75,447242.5,7.84291977202981
