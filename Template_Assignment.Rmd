@@ -223,7 +223,6 @@ datacombined15tot23goed$X. <- NULL
 datacombined15tot23goed$...1 <- NULL
 
 ```
-
 Data cleaning woningprijsprov:
 we mainly used this code to clean this data set:
 woningprijsprov$`1995` <- format(woningprijsprov$`1995`, big.mark = ".", scientific = FALSE)
@@ -253,7 +252,6 @@ write.csv(gem_huizenprijs_per_provincie, "goede data/goedehuizenprijsenperprov.c
 
 ```{r}
 library(tidyverse)
-bevolkingsdichtheid <- read.csv("goede data/bevolkingsdichtheid.csv")
 bevolkingsdichtheid <- bevolkingsdichtheid %>% filter(V1 != "Regionale kerncijfers Nederland")
 bevolkingsdichtheid <- bevolkingsdichtheid %>% filter(V1 != "Perioden")
 bevolkingsdichtheid <- bevolkingsdichtheid %>% filter(V1 != "Onderwerp")
