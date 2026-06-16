@@ -98,7 +98,8 @@ write.csv(X2023, "data/data2023.csv", row.names = FALSE)
 ```
 
 ```{r}
-Bev_dichtheid <- read.csv("C:/Users/vince/Downloads/Regionale_kerncijfers_Nederland_10062026_163720.csv", header=FALSE, sep=";")
+#Bev_dichtheid <- read.csv("C:/Users/vince/Downloads/Regionale_kerncijfers_Nederland_10062026_163720.csv", header=FALSE, sep=";")
+
 write.csv(Bev_dichtheid, "goede data/bevolkingsdichtheid.csv")
 ```
 
