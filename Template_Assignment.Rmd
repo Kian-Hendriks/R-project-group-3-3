@@ -486,12 +486,12 @@ ggplot(nl_map) +
   scale_fill_distiller(
     palette = "Blues",
     direction = 1,        # 1 = darker means higher value
-    name = "Mean spendable income (x100 €)"
+    name = "Average spendable income (x100 €)"
   ) +
   theme_void() +
   labs(
-    title = "Mean Spendable Income per Province",
-    subtitle = "Average over 2015-2023"
+    title = "Average Spendable Income per Province",
+    subtitle = "Average Between 2015-2023"
   )
 
 
@@ -514,13 +514,13 @@ ggplot(nl_map) +
   scale_fill_distiller(
     palette = "Greens",
     direction = 1,
-    name = "Gem. huizenprijs (€)",
+    name = "Avg. Houseprice (€)",
     labels = scales::comma
   ) +
   theme_void() +
   labs(
-    title = "Gemiddelde Huizenprijs per Provincie",
-    subtitle = "Gemiddelde over de laatste jaren"
+    title = "Average Houseprice per Province",
+    subtitle = "Average between 2015-2023"
   )
 ```
 
