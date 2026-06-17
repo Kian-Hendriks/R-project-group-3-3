@@ -528,16 +528,16 @@ map_income <- merge(nl_map, income_data, by.x = "statnaam", by.y = "Provincies")
 map_house  <- merge(nl_map, house_data,  by.x = "statnaam", by.y = "Provincies")
 
 p_income <- ggplot(map_income) +
-  geom_sf(aes(fill = mean_income)) +
+  geom_sf(aes(fill = mean_income * 100)) +
   scale_fill_distiller(palette = "Blues", direction = 1,
-                       name = "Income\n(x100 €)") +
+                       name = "Income (euros)", labels = scales::comma) +
   theme_void() +
   labs(title = "Average spendable income")
 
 p_house <- ggplot(map_house) +
   geom_sf(aes(fill = huizenprijs)) +
   scale_fill_distiller(palette = "Greens", direction = 1,
-                       name = "House price\n(€)", labels = scales::comma) +
+                       name = "House price (euros)", labels = scales::comma) +
   theme_void() +
   labs(title = "Average house price")
 
@@ -579,16 +579,16 @@ df_box <- df_provincies %>%
     Provincies = str_remove(Provincies, " \\(PV\\)"),
     gem_huizenprijs = as.numeric(gem_huizenprijs),
     regio = ifelse(Provincies %in% randstad,
-                   "Randstad (incl. Flevoland)", "Buiten Randstad")
+                   "Randstad (incl. Flevoland)", "Outside Randstad")
   )
 
 ggplot(df_box, aes(x = regio, y = gem_huizenprijs, fill = regio)) +
   geom_boxplot(alpha = 0.7, outlier.shape = 21) +
   scale_fill_manual(values = c("Randstad (incl. Flevoland)" = "steelblue",
-                               "Buiten Randstad" = "orange")) +
+                               "Outside Randstad" = "orange")) +
   labs(
     title = "House prices: Randstad vs. outside the Randstad (2020-2022)",
-    x = "", y = "Average house price (x1000 €)"
+    x = "", y = "Average house price (x1000 euros)"
   ) +
   theme_minimal() +
   theme(legend.position = "none")
@@ -624,7 +624,8 @@ ratio_data <- read.csv("goede data/randstad_vs_buiten_randstad.csv",
 ratio_data <- ratio_data %>%
   mutate(
     huizenprijs_euro = gem_huizenprijs * 1000,
-    verhouding_prijs_inkomen = huizenprijs_euro / gem_bstb_inkomen_euro
+    verhouding_prijs_inkomen = huizenprijs_euro / gem_bstb_inkomen_euro,
+    regio = ifelse(regio == "Buiten Randstad", "Outside Randstad", regio)
   )
 
 write.csv(ratio_data, "goede data/verhouding_prijs_inkomen.csv", row.names = FALSE)
@@ -640,7 +641,7 @@ ggplot(ratio_data, aes(x = jaar, y = verhouding_prijs_inkomen,
   geom_point(size = 2.5) +
   scale_x_continuous(breaks = c(2020, 2021, 2022, 2023)) +
   scale_color_manual(values = c("Randstad (incl. Flevoland)" = "steelblue",
-                                "Buiten Randstad" = "orange")) +
+                                "Outside Randstad" = "orange")) +
   labs(
     title = "Price-to-income ratio per region around the 2022 event",
     subtitle = "Years of disposable income needed to buy an average house",
