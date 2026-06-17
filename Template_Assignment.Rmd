@@ -188,7 +188,12 @@ For this study three datasets from the Centraal Bureau voor de Statistiek (CBS) 
 
 All datasets are available on CBS StatLine. The dataset on the prices of houses spans from 2015 until 2025, the dataset on income only covers 2015 until 2023. The dataset on population density in the Netherlands spans from 1995 until 2025. For the analysis in this research the overlapping years of 2015-2023(or a part thereof) are studied.
 
+Metadata: 
+Density: Compiled from over 50 CBS surveys, with annual figures from 1995 onwards. Most figures are final, though some recent years contain provisional or preliminary data for specific topics such as social security and housing.
 
+Average House Price: Based on notarial transaction records registered by the Kadaster, combined with WOZ valuations of all homes in the Netherlands. Figures are final immediately upon publication. Revisions only occur in exceptional cases. Note that the average sale price is not the same as the price index and should not be used as an indicator of price development.
+
+Household Income: Based on tax and administrative records for all private households with known income. Figures for 2011–2022 are final; 2023 figures are preliminary. This table has been discontinued and replaced by an updated version.
 
 ## 2.3 Describe the type of variables included
 
