@@ -196,10 +196,11 @@ The data originates from administrative sources, not interviews or questionnaire
 # Part 3 - Quantifying
 
 ## 3.1 Data cleaning
-Data cleaning datacombined15tot23goed.
-we mainly used this code to clean this data set:
-names(datacombined15tot23goed)[names(datacombined15tot23goed) == "X1.000.euro...6"] <- "gem_st_inkomen_x_100"
-ETC.
+Income data: Column names were replaced with clearer labels, footnote rows were removed, and the cleaned data was saved.
+
+Housing prices: Values were reformatted with thousand separators and the dataset was saved.
+
+Population density: This required extra steps because the original CBS file had multiple header rows before the actual data. Province names were extracted manually, the data was reshaped from wide to long format, filtered to exclude the national total. The end result is a table with one row per province and years as columns.
 
 ```{r include=FALSE}
 datacombined15tot23goed <- read.csv("goede data/datacombined15tot23goed.csv")
