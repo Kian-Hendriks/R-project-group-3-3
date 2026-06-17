@@ -32,7 +32,7 @@ require(patchwork)
 # explain each step in the text. echo = FALSE applies to every chunk.
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
-
+\newpage
 # Part 1 - Identify a Social Problem
 
 Use APA referencing throughout your document. [Here's a link to some explanation.](https://www.mendeley.com/guides/apa-citation-guide/)
@@ -45,7 +45,7 @@ It’s striking that this development differs significantly across regions in th
 
 This project investigates the relationship between regional income growth and house price dynamics in Dutch provinces, based on CBS-data and the programming tool R. The goal is to discover in which regions the housing market detached most from the local income development.
 
-
+\newpage
 # Part 2 - Data Sourcing
 
 ## 2.1 Load in the data
@@ -115,7 +115,7 @@ write.csv(Bev_dichtheid, "goede data/bevolkingsdichtheid.csv")
 ```
 
 
-## joining
+
 
 ```{r include=FALSE}
 
@@ -190,7 +190,7 @@ The datasets mostly have social economic variables . The house price dataset mea
 
 The data originates from administrative sources, not interviews or questionnaires. The average house prices are based on the ‘Basisregistratie Kadaster’, in which every official sale of a house is recorded by law. The data on the income of households are deduced from tax returns and benefit registrations, processed by the CBS into regional stats. The data on population density is computed by dividing the amount of inhabitants officially listed by the amount of square kilometers in the region.
 
-
+\newpage
 # Part 3 - Quantifying
 
 ## 3.1 Data cleaning
@@ -637,7 +637,7 @@ relative to local income. After the 2022 interest-rate turn the ratio falls agai
 affordability moves with the financing event rather than with local income growth suggests
 that house prices in this period were driven more by mortgage conditions than by regional
 purchasing power -- and that the affordability gap is structurally largest in the Randstad.
-
+\newpage
 # Part 4 - Discussion
 
 ## 4.1 Discuss your findings
@@ -663,7 +663,7 @@ covers only the twelve provinces, so within-province differences (e.g. between c
 rural areas) are hidden. Finally, our results show association, not causation: income and
 house prices move together, but both are likely influenced by common drivers such as
 interest rates and the supply of housing.
-
+\newpage
 # Part 5 - Reproducibility
 
 ## 5.1 Github repository link
