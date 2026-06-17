@@ -467,7 +467,7 @@ maak_grafiek <- function(data, titel) {
     scale_x_continuous(breaks = c(2020, 2021, 2022, 2023)) +
     scale_color_manual(values = c("House price" = "steelblue", "Income" = "orange")) +
     scale_linetype_manual(values = c("House price" = "solid", "Income" = "dashed")) +
-    labs(title = titel, x = "Year", y = "Growth vs. 2020",
+    labs(title = titel, x = "Year", y = "Growth vs. 2020 (%)",
          color = "", linetype = "") +
     theme_minimal() +
     theme(legend.position = "top")
@@ -515,11 +515,11 @@ ggplot(nl_map) +
   scale_fill_distiller(
     palette = "Blues",
     direction = 1,        # 1 = darker means higher value
-    name = "Mean spendable income (x100 €)"
+    name = "Avg. spendable income (x100 €)"
   ) +
   theme_void() +
   labs(
-    title = "Mean Spendable Income per Province (in euro's)",
+    title = "Average Spendable Income per Province (€)",
     subtitle = "Average between 2015-2023"
   )
 
@@ -548,7 +548,7 @@ ggplot(nl_map) +
   ) +
   theme_void() +
   labs(
-    title = "Average House Price per Province (in euro's)",
+    title = "Average House Price per Province (€)",
     subtitle = "Average between 2015-2023"
   )
 ```
@@ -586,7 +586,7 @@ ggplot(data = df_plot, aes(x = dichtheid, y = huizenprijs, label = Provincies)) 
     title = "Correlation Population Density vs. House Prices (2020-2022)",
     subtitle = "With linear regression line",
     x = "Population density (inhabitants per km²)",
-    y = "Average house price"
+    y = "Average house price (x1000 €)"
   ) +
   theme_minimal()
 ```
