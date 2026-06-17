@@ -419,6 +419,8 @@ bevolking_huizen <- merge(bevolkingsdichtheid_lang, huizenprijzen_lang[, c("Prov
 write.csv(bevolking_huizen, "goede data/bevolkingsdichtheid_en_huizenprijzen_per_provincie.csv", row.names = FALSE)
 ```
 
+\newpage
+
 ## 3.3 Visualize temporal variation
 
 **What we did.** We read the regional dataset, averaged income and the house price across
@@ -468,6 +470,8 @@ to 2020. House prices rose much faster than income: prices climbed by roughly 15
 and another 11% in 2022, while income grew by only about 4% to 5% per year. The widening gap
 between the two lines (the growing distance between housing costs and what people earn) is
 exactly the affordability problem central to this assignment.
+
+\newpage
 
 ## 3.4 Visualize spatial variation
 
@@ -533,6 +537,8 @@ steeply than income across the map, so the regions that are already expensive be
 relatively even less accessible. This spatial inequality in access to housing is the core
 of our social problem.
 
+\newpage
+
 ## 3.5 Visualize sub-population variation
 
 **What we did.** We took the house price per province and year, labelled each province as
@@ -574,6 +580,8 @@ of the country. Prices in the Randstad are clearly higher: both the median and t
 range sit above those outside the Randstad. This is relevant to our social problem because it
 shows that the affordability pressure is concentrated in exactly the densely populated
 provinces where most people want or need to live, where housing is least affordable.
+
+\newpage
 
 ## 3.6 Event analysis
 
@@ -634,7 +642,9 @@ relative to local income. After the 2022 interest-rate turn the ratio falls agai
 affordability moves with the financing event rather than with local income growth suggests
 that house prices in this period were driven more by mortgage conditions than by regional
 purchasing power -- and that the affordability gap is structurally largest in the Randstad.
+
 \newpage
+
 # Part 4 - Discussion
 
 ## 4.1 Discuss your findings
