@@ -1,6 +1,6 @@
 ---
 title: "Regional Income Growth and House Price Dynamics in the Netherlands"
-author: 'Vincent, Joris (2890473), Vincent, Thies, Kian & Julius (2898227) '
+author: 'Vincent van Boven, Joris van Elden (2890473), Vincent van Denzen, Thies van der Aar, Kian Hendriks & Julius Shano (2898227)'
 date: "`r Sys.Date()`"
 output:
   pdf_document: default
@@ -8,7 +8,7 @@ output:
     df_print: paged
 ---
 
-# Set-up your environment
+
 ```{r package_install, include=FALSE}
 install.packages("tidyverse")
 install.packages("yaml")
@@ -26,13 +26,6 @@ require(yaml)
 # (the visualisations) switch this back on with echo = TRUE.
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
-
-# Regional Income Growth and House Price Dynamics in the Netherlands
-
-Vincent, Joris, Vincent, Thies, Kian & Julius
-
-Tutorial group 3.3 
-
 
 # Part 1 - Identify a Social Problem
 
@@ -468,7 +461,7 @@ maak_grafiek <- function(data, titel) {
     scale_x_continuous(breaks = c(2020, 2021, 2022, 2023)) +
     scale_color_manual(values = c("House price" = "steelblue", "Income" = "orange")) +
     scale_linetype_manual(values = c("House price" = "solid", "Income" = "dashed")) +
-    labs(title = titel, x = "Year", y = "Growth vs. 2020",
+    labs(title = titel, x = "Year", y = "Growth vs. 2020 (%)",
          color = "", linetype = "") +
     theme_minimal() +
     theme(legend.position = "top")
@@ -516,11 +509,11 @@ ggplot(nl_map) +
   scale_fill_distiller(
     palette = "Blues",
     direction = 1,        # 1 = darker means higher value
-    name = "Mean spendable income (x100 €)"
+    name = "Avg. spendable income (x100 €)"
   ) +
   theme_void() +
   labs(
-    title = "Mean Spendable Income per Province (in euro's)",
+    title = "Average Spendable Income per Province (€)",
     subtitle = "Average between 2015-2023"
   )
 
@@ -549,7 +542,7 @@ ggplot(nl_map) +
   ) +
   theme_void() +
   labs(
-    title = "Average House Price per Province (in euro's)",
+    title = "Average House Price per Province (€)",
     subtitle = "Average between 2015-2023"
   )
 ```
@@ -587,7 +580,7 @@ ggplot(data = df_plot, aes(x = dichtheid, y = huizenprijs, label = Provincies)) 
     title = "Correlation Population Density vs. House Prices (2020-2022)",
     subtitle = "With linear regression line",
     x = "Population density (inhabitants per km²)",
-    y = "Average house price"
+    y = "Average house price (x1000 €)"
   ) +
   theme_minimal()
 ```
