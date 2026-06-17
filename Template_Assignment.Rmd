@@ -28,8 +28,7 @@ require(patchwork)
 ```
 
 ```{r setup, include=FALSE}
-# Hide all code in the rendered document: we only show the visualisations and
-# explain each step in the text. echo = FALSE applies to every chunk.
+# hide the code, only show the plots
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 \newpage
@@ -53,6 +52,16 @@ year column), the files were combined row-wise into a single dataset with
 data2021, data2022, data2023)`. This income dataset was then merged with the house-price
 data (per province) and the population-density data, so that every observation is a
 province in a given year.
+
+The house-price data came from a single CBS file with the average sale price of existing
+houses per province. We loaded it with `read.csv()` and stored it as `woningprijsprov`,
+which already has one row per province and a column for each year, so no files had to be
+combined here.
+
+The population-density data came from the CBS file `regionale_kerncijfers.csv`. Because this
+file uses a semicolon as separator and has several title rows on top instead of a normal
+header, we read it with `read.csv(..., sep = ";", header = FALSE)` and saved the result as
+`Bev_dichtheid`. The actual cleaning of these last two datasets is done in section 3.1.
 
 ```{r include=FALSE}
 
@@ -423,10 +432,10 @@ write.csv(bevolking_huizen, "goede data/bevolkingsdichtheid_en_huizenprijzen_per
 
 ## 3.3 Visualize temporal variation
 
-**What we did.** We read the regional dataset, averaged income and the house price across
-the two regions to obtain a single national figure per year, and expressed both as growth
-relative to 2020. The result is one line for house prices and one for income, so the
-widening gap between them is visible in a single graph.
+To visualize the temporal variation we averaged income and the house price across the two
+regions, so we get a single national figure per year, and then expressed both as growth
+relative to 2020. This gives us one line for house prices and one for income, which makes the
+widening gap between them visible in a single graph.
 
 ```{r plot_temporal, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -475,10 +484,10 @@ exactly the affordability problem central to this assignment.
 
 ## 3.4 Visualize spatial variation
 
-**What we did.** We loaded the province boundaries, merged the average income and the
-average house price per province onto the map, and built two choropleth maps. We then placed
-them next to each other as a single figure with panels (a) and (b), using the `patchwork`
-package, so the two patterns can be compared directly.
+For the spatial variation we loaded the province boundaries and merged the average income and
+the average house price per province onto the map, which gave us two maps. We placed these
+next to each other as a single figure with panels (a) and (b), using the `patchwork` package,
+so that the two patterns can be compared directly.
 
 ```{r visualise_map, message=FALSE, warning=FALSE, fig.width=9, fig.height=5}
 require(sf)
@@ -541,11 +550,11 @@ of our social problem.
 
 ## 3.5 Visualize sub-population variation
 
-**What we did.** We took the house price per province and year, labelled each province as
-either Randstad (Noord-Holland, Zuid-Holland, Utrecht and Flevoland) or outside the
-Randstad, and compared the two groups with a boxplot. The boxplot shows the whole
-distribution of house prices within each group (median, spread and outliers) instead of
-twelve separate provinces.
+To look at the sub-population variation we took the house price per province and year and
+labelled each province as either Randstad (Noord-Holland, Zuid-Holland, Utrecht and
+Flevoland) or outside the Randstad, and then compared the two groups with a boxplot. A
+boxplot shows the whole distribution of house prices within each group (median, spread and
+outliers) instead of twelve separate provinces.
 
 ```{r visualise_subpopulations, message=FALSE, warning=FALSE}
 library(tidyverse)
