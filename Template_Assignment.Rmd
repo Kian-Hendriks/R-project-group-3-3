@@ -688,7 +688,7 @@ interest rates and the supply of housing.
 
 ## 5.1 Github repository link
 
-Provide the link to your PUBLIC repository here: <!-- paste public repo URL -->
+Provide the link to your PUBLIC repository here: <https://github.com/Kian-Hendriks/R-project-group-3-3>
 
 ## 5.2 Reference list
 
