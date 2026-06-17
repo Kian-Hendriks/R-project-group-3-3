@@ -689,7 +689,9 @@ covers only the twelve provinces, so within-province differences (e.g. between c
 rural areas) are hidden. Finally, our results show association, not causation: income and
 house prices move together, but both are likely influenced by common drivers such as
 interest rates and the supply of housing.
+
 \newpage
+
 # Part 5 - Reproducibility
 
 ## 5.1 Github repository link
