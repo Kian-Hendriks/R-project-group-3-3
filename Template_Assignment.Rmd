@@ -3,8 +3,12 @@ title: "Regional Income Growth and House Price Dynamics in the Netherlands"
 author: 'Vincent van Boven, Joris van Elden (2890473), Vincent van Denzen, Thies van der Aar, Kian Hendriks & Julius Shano (2898227)'
 date: "`r Sys.Date()`"
 output:
-  pdf_document: default
+  pdf_document:
+    toc: true
+    toc_depth: 2
   html_document:
+    toc: true
+    toc_depth: 2
     df_print: paged
 ---
 
@@ -13,17 +17,19 @@ output:
 install.packages("tidyverse")
 install.packages("yaml")
 install.packages("rmarkdown")
+install.packages("patchwork")
 ```
 
 ```{r packages, include=FALSE}
 require(tidyverse)
 require(rmarkdown)
 require(yaml)
+require(patchwork)
 ```
 
 ```{r setup, include=FALSE}
-# Hide code by default in the rendered PDF. The chunks we want to present
-# (the visualisations) switch this back on with echo = TRUE.
+# Hide all code in the rendered document: we only show the visualisations and
+# explain each step in the text. echo = FALSE applies to every chunk.
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 
@@ -43,7 +49,6 @@ This project investigates the relationship between regional income growth and ho
 # Part 2 - Data Sourcing
 
 ## 2.1 Load in the data
-<!-- DRAFT: verify & adjust -->
 For the income data we used nine separate CBS files, one for each year from 2015 to 2023.
 After cleaning each file individually (removing empty helper columns and adding a `jaar`
 year column), the files were combined row-wise into a single dataset with
@@ -229,9 +234,7 @@ datacombined15tot23goed$X. <- NULL
 datacombined15tot23goed$...1 <- NULL
 
 ```
-Data cleaning woningprijsprov:
-we mainly used this code to clean this data set:
-woningprijsprov$`1995` <- format(woningprijsprov$`1995`, big.mark = ".", scientific = FALSE)
+
 ```{r include=FALSE}
 woningprijsprov <- read.csv("goede data/goedehuizenprijsenperprov.csv")
 woningprijsprov$`1995` <- format(woningprijsprov$`1995`, big.mark = ".", scientific = FALSE)
@@ -315,16 +318,11 @@ head(bevolking_breed)   # View() does not work while knitting
 ## 3.2 Generate necessary variables
 
 **Variable 1 -- average disposable income per province**
-<!-- DRAFT: verify & adjust -->
 Our first generated variable is the average disposable household income per province,
-averaged over the years 2015--2023. We created it by aggregating the cleaned income
-dataset (`datacombined15tot23goed`) with `aggregate()`, taking the mean of
-`gem_bstb_inkomen_x_100` for each province. The result (`gem_inkomen_provincie`) gives one
-income figure per province and serves as a stable benchmark of regional purchasing power,
-which we later compare against house prices. The code used was:
-gem_inkomen_provincie <- aggregate(gem_bstb_inkomen_x_100 ~ Provincies,
-                                    data = datacombined15tot23goed,
-                                    FUN = mean)
+averaged over the years 2015--2023. We created it by aggregating the cleaned income dataset,
+taking the mean disposable income for each province. The result gives one income figure per
+province and serves as a stable benchmark of regional purchasing power, which we later
+compare against house prices.
 
 ```{r gen_var1, include=FALSE}
 
@@ -340,7 +338,6 @@ write.csv(gem_inkomen_provincie, "goede data/gem_inkomen_provincie.csv", row.nam
 ```
 
 **Variable 2 -- Randstad versus outside the Randstad**
-<!-- DRAFT: verify & adjust -->
 For the second variable we grouped the provinces into two regions, the Randstad (including
 Flevoland) and the rest of the country, and computed the average income and average house
 price for each region per year. This required reshaping the house-price dataset from wide
@@ -368,14 +365,12 @@ write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv",
 ```
 
 **Variable 3 -- population density and house price per province**
-<!-- DRAFT: verify & adjust -->
-The third variable that we created combines population density with the average house price for each
-province per year (2020--2023). We reshaped both the density data and the house-price data
-to long format and merged them on province and year, producing
-`bevolkingsdichtheid_en_huizenprijzen_per_provincie`. This variable allows us to test
-whether more densely populated provinces also have higher house prices (used in section
-3.5). We also created afourth variable, the price-to-income ratio, wich you can see later in the assignment
- (section 3.6).
+The third variable that we created combines population density with the average house price
+for each province per year (2020--2023). We reshaped both the density data and the
+house-price data to long format and merged them on province and year. This variable lets us
+group the provinces into Randstad versus outside the Randstad and compare their house prices
+(used in section 3.5). We also created a fourth variable, the price-to-income ratio, which
+you can see later in the assignment (section 3.6).
 
 ```{r}
 bevolkingsdichtheid_raw <- read.csv("goede data/goede_bevolkingsdichtheid.csv", header = FALSE)
@@ -429,73 +424,69 @@ write.csv(bevolking_huizen, "goede data/bevolkingsdichtheid_en_huizenprijzen_per
 
 ## 3.3 Visualize temporal variation
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+**What we did.** We read the regional dataset, averaged income and the house price across
+the two regions to obtain a single national figure per year, and expressed both as growth
+relative to 2020. The result is one line for house prices and one for income, so the
+widening gap between them is visible in a single graph.
+
+```{r plot_temporal, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(scales)
 
 df <- read.csv("goede data/randstad_vs_buiten_randstad.csv", stringsAsFactors = FALSE)
 
-df_plot <- df %>%
-  arrange(regio, jaar) %>%
-  group_by(regio) %>%
-  mutate(
-    groei_huizen = (gem_huizenprijs / first(gem_huizenprijs)) - 1,
-    groei_inkomen = (gem_bstb_inkomen_euro / first(gem_bstb_inkomen_euro)) - 1
+df_nl <- df %>%
+  group_by(jaar) %>%
+  summarise(
+    gem_huizenprijs = mean(gem_huizenprijs),
+    gem_inkomen     = mean(gem_bstb_inkomen_euro),
+    .groups = "drop"
   ) %>%
-  ungroup()
+  arrange(jaar) %>%
+  mutate(
+    `House price` = gem_huizenprijs / first(gem_huizenprijs) - 1,
+    Income        = gem_inkomen / first(gem_inkomen) - 1
+  )
 
-df_long <- df_plot %>%
-  pivot_longer(cols = c(groei_huizen, groei_inkomen),
-               names_to = "type",
-               values_to = "groei") %>%
-  mutate(type = recode(type,
-                       "groei_huizen" = "House price",
-                       "groei_inkomen" = "Income"))
+df_long <- df_nl %>%
+  pivot_longer(cols = c(`House price`, Income),
+               names_to = "type", values_to = "groei")
 
-maak_grafiek <- function(data, titel) {
-  ggplot(data, aes(x = jaar, y = groei, color = type, linetype = type)) +
-    geom_line(linewidth = 1) +
-    geom_point(size = 2.5) +
-    geom_hline(yintercept = 0, linetype = "dotted", color = "grey40") +
-    scale_y_continuous(labels = percent_format(accuracy = 1)) +
-    scale_x_continuous(breaks = c(2020, 2021, 2022, 2023)) +
-    scale_color_manual(values = c("House price" = "steelblue", "Income" = "orange")) +
-    scale_linetype_manual(values = c("House price" = "solid", "Income" = "dashed")) +
-    labs(title = titel, x = "Year", y = "Growth vs. 2020 (%)",
-         color = "", linetype = "") +
-    theme_minimal() +
-    theme(legend.position = "top")
-}
-
-grafieken_tonen <- function() {
-  print(maak_grafiek(
-    df_long %>% filter(regio == "Randstad (incl. Flevoland)"),
-    "Growth Randstad vs. 2020"
-  ))
-  print(maak_grafiek(
-    df_long %>% filter(regio == "Buiten Randstad"),
-    "Growth outside the Randstad vs. 2020"
-  ))
-}
-
-grafieken_tonen()
+ggplot(df_long, aes(x = jaar, y = groei, color = type, linetype = type)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2.5) +
+  geom_hline(yintercept = 0, linetype = "dotted", color = "grey40") +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  scale_x_continuous(breaks = c(2020, 2021, 2022, 2023)) +
+  scale_color_manual(values = c("House price" = "steelblue", "Income" = "orange")) +
+  scale_linetype_manual(values = c("House price" = "solid", "Income" = "dashed")) +
+  labs(title = "Growth of house prices vs. income (Netherlands, relative to 2020)",
+       x = "Year", y = "Growth vs. 2020 (%)", color = "", linetype = "") +
+  theme_minimal() +
+  theme(legend.position = "top")
 ```
 
-These two graphs show the growth of house prices and disposable income relative to 2020,
-for the Randstad and for the rest of the country. In both regions house prices rose much
-faster than income: prices climbed by roughly 15% in 2021 and another 11% in 2022, while
-income grew by only about 4% to 5% per year. The gap between the two lines (the widening
-distance between housing costs and what people earn) is exactly the affordability problem
-central to this assignment, and it is visibly larger in the Randstad than outside it.
+This graph shows the national-average growth of house prices and disposable income relative
+to 2020. House prices rose much faster than income: prices climbed by roughly 15% in 2021
+and another 11% in 2022, while income grew by only about 4% to 5% per year. The widening gap
+between the two lines (the growing distance between housing costs and what people earn) is
+exactly the affordability problem central to this assignment.
 
 ## 3.4 Visualize spatial variation
 
-```{r visualise_map, echo=TRUE, message=FALSE, warning=FALSE}
+**What we did.** We loaded the province boundaries, merged the average income and the
+average house price per province onto the map, and built two choropleth maps. We then placed
+them next to each other as a single figure with panels (a) and (b), using the `patchwork`
+package, so the two patterns can be compared directly.
+
+```{r visualise_map, message=FALSE, warning=FALSE, fig.width=9, fig.height=5}
 require(sf)
 require(ggplot2)
+require(patchwork)
+
 nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson", quiet = TRUE)
 
-my_data <- data.frame(
+income_data <- data.frame(
   Provincies = c("Groningen", "Fryslân", "Limburg", "Drenthe", "Overijssel",
                  "Zeeland", "Zuid-Holland", "Gelderland", "Flevoland",
                  "Noord-Brabant", "Noord-Holland", "Utrecht"),
@@ -503,25 +494,8 @@ my_data <- data.frame(
                   445.1111, 453.8889, 454.7778, 461.2222, 466.7778,
                   474.8889, 493.5556)
 )
-nl_map <- merge(nl_map, my_data, by.x = "statnaam", by.y = "Provincies")
-ggplot(nl_map) +
-  geom_sf(aes(fill = mean_income)) +
-  scale_fill_distiller(
-    palette = "Blues",
-    direction = 1,        # 1 = darker means higher value
-    name = "Avg. spendable income (x100 €)"
-  ) +
-  theme_void() +
-  labs(
-    title = "Average Spendable Income per Province (€)",
-    subtitle = "Average between 2015-2023"
-  )
 
-
-nl_map <- st_read("https://cartomap.github.io/nl/wgs84/provincie_2024.geojson", quiet = TRUE)
-
-
-my_data2 <- data.frame(
+house_data <- data.frame(
   Provincies = c("Groningen", "Fryslân", "Drenthe", "Overijssel", "Flevoland",
                  "Gelderland", "Utrecht", "Noord-Holland", "Zuid-Holland",
                  "Zeeland", "Noord-Brabant", "Limburg"),
@@ -530,25 +504,32 @@ my_data2 <- data.frame(
                   280299.6, 360750.2, 283216.8)
 )
 
-nl_map <- merge(nl_map, my_data2, by.x = "statnaam", by.y = "Provincies")
+map_income <- merge(nl_map, income_data, by.x = "statnaam", by.y = "Provincies")
+map_house  <- merge(nl_map, house_data,  by.x = "statnaam", by.y = "Provincies")
 
-ggplot(nl_map) +
-  geom_sf(aes(fill = huizenprijs)) +
-  scale_fill_distiller(
-    palette = "Greens",
-    direction = 1,
-    name = "Avg. house price (in euro's)",
-    labels = scales::comma
-  ) +
+p_income <- ggplot(map_income) +
+  geom_sf(aes(fill = mean_income)) +
+  scale_fill_distiller(palette = "Blues", direction = 1,
+                       name = "Income\n(x100 €)") +
   theme_void() +
-  labs(
-    title = "Average House Price per Province (€)",
-    subtitle = "Average between 2015-2023"
+  labs(title = "Average spendable income")
+
+p_house <- ggplot(map_house) +
+  geom_sf(aes(fill = huizenprijs)) +
+  scale_fill_distiller(palette = "Greens", direction = 1,
+                       name = "House price\n(€)", labels = scales::comma) +
+  theme_void() +
+  labs(title = "Average house price")
+
+(p_income + p_house) +
+  plot_annotation(
+    title = "Income and house prices per province (average 2015-2023)",
+    tag_levels = "a", tag_prefix = "(", tag_suffix = ")"
   )
 ```
 
-The two maps show the spatial distribution of, respectively, average disposable income and
-the average house price per province. The highest incomes and the highest house prices both
+The two maps show the spatial distribution of (a) average disposable income and (b) the
+average house price per province. The highest incomes and the highest house prices both
 concentrate in the same central provinces (Utrecht and Noord-Holland), while the peripheral
 provinces (Groningen, Zeeland, Drenthe) score low on both. However, house prices rise more
 steeply than income across the map, so the regions that are already expensive become
@@ -557,40 +538,45 @@ of our social problem.
 
 ## 3.5 Visualize sub-population variation
 
-```{r visualise_subpopulations, echo=TRUE, message=FALSE, warning=FALSE}
+**What we did.** We took the house price per province and year, labelled each province as
+either Randstad (Noord-Holland, Zuid-Holland, Utrecht and Flevoland) or outside the
+Randstad, and compared the two groups with a boxplot. The boxplot shows the whole
+distribution of house prices within each group (median, spread and outliers) instead of
+twelve separate provinces.
+
+```{r visualise_subpopulations, message=FALSE, warning=FALSE}
 library(tidyverse)
 
-df_provincies <- read.csv("goede data/bevolkingsdichtheid_en_huizenprijzen_per_provincie.csv", stringsAsFactors = FALSE)
+df_provincies <- read.csv("goede data/bevolkingsdichtheid_en_huizenprijzen_per_provincie.csv",
+                          stringsAsFactors = FALSE)
 
-df_plot <- df_provincies %>%
-  mutate(Provincies = str_remove(Provincies, " \\(PV\\)")) %>%
-  group_by(Provincies) %>%
-  summarise(
-    dichtheid = mean(bevolkingsdichtheid_per_provincie, na.rm = TRUE),
-    huizenprijs = mean(gem_huizenprijs, na.rm = TRUE)
-  ) %>%
-  drop_na(dichtheid, huizenprijs)
+randstad <- c("Noord-Holland", "Zuid-Holland", "Utrecht", "Flevoland")
 
-ggplot(data = df_plot, aes(x = dichtheid, y = huizenprijs, label = Provincies)) +
-  geom_smooth(method = "lm", formula = y ~ x, color = "darkred", linetype = "dashed", se = FALSE) +
-  geom_point(color = "steelblue", size = 3) +  
-  geom_text(vjust = -1.5, size = 3.5) +                 
-  scale_y_continuous(expand = expansion(mult = c(0.1, 0.2))) +
+df_box <- df_provincies %>%
+  mutate(
+    Provincies = str_remove(Provincies, " \\(PV\\)"),
+    gem_huizenprijs = as.numeric(gem_huizenprijs),
+    regio = ifelse(Provincies %in% randstad,
+                   "Randstad (incl. Flevoland)", "Buiten Randstad")
+  )
+
+ggplot(df_box, aes(x = regio, y = gem_huizenprijs, fill = regio)) +
+  geom_boxplot(alpha = 0.7, outlier.shape = 21) +
+  scale_fill_manual(values = c("Randstad (incl. Flevoland)" = "steelblue",
+                               "Buiten Randstad" = "orange")) +
   labs(
-    title = "Correlation Population Density vs. House Prices (2020-2022)",
-    subtitle = "With linear regression line",
-    x = "Population density (inhabitants per km²)",
-    y = "Average house price (x1000 €)"
+    title = "House prices: Randstad vs. outside the Randstad (2020-2022)",
+    x = "", y = "Average house price (x1000 €)"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(legend.position = "none")
 ```
 
-This scatter plot relates population density to the average house price per province, with
-a linear regression line added. The upward slope shows a clear positive association: more
-densely populated provinces tend to have higher house prices. This is relevant to our
-social problem because it indicates that scarcity of space, not just income, drives prices
-up, we  can see that precisely in the crowded provinces where most people want or need to live, housing is
-least affordable.
+This boxplot compares the distribution of average house prices in the Randstad with the rest
+of the country. Prices in the Randstad are clearly higher: both the median and the whole
+range sit above those outside the Randstad. This is relevant to our social problem because it
+shows that the affordability pressure is concentrated in exactly the densely populated
+provinces where most people want or need to live, where housing is least affordable.
 
 ## 3.6 Event analysis
 
@@ -602,7 +588,7 @@ income), which can be read as "the number of years of income needed to buy an av
 house". The plot below shows this ratio over time for the Randstad and the rest of the
 country, with the 2022 event marked.
 
-```{r analysis, echo=TRUE, message=FALSE, warning=FALSE}
+```{r analysis, message=FALSE, warning=FALSE}
 library(tidyverse)
 
 # New variable (variable 4): price-to-income ratio = average house price (in euro)
