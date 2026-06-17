@@ -1,6 +1,6 @@
 ---
 title: "Regional Income Growth and House Price Dynamics in the Netherlands"
-author: 'Vincent van Boven, Joris van Elden (2890473), Vincent van Denzen, Thies van der Aar, Kian Hendriks & Julius Shano(2898227) '
+author: 'Vincent van Boven, Joris van Elden (2890473), Vincent van Denzen, Thies van der Aar, Kian Hendriks & Julius Shano (2898227)'
 date: "`r Sys.Date()`"
 output:
   pdf_document: default
@@ -8,7 +8,7 @@ output:
     df_print: paged
 ---
 
-# Set-up your environment
+
 ```{r package_install, include=FALSE}
 install.packages("tidyverse")
 install.packages("yaml")
@@ -26,13 +26,6 @@ require(yaml)
 # (the visualisations) switch this back on with echo = TRUE.
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
-
-# Regional Income Growth and House Price Dynamics in the Netherlands
-
-Vincent, Joris, Vincent, Thies, Kian & Julius
-
-Tutorial group 3.3 
-
 
 # Part 1 - Identify a Social Problem
 
