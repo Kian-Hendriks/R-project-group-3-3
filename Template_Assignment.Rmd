@@ -1,6 +1,8 @@
 ---
 title: "Regional Income Growth and House Price Dynamics in the Netherlands"
-author: 'Vincent van Boven(2844123), Joris van Elden (2890473), Vincent van Denzen(2864817), Thies van der Aar(2900182), Kian Hendriks(2898447) & Julius Shano (2898227)'
+author: |
+  Vincent van Boven (2844123), Joris van Elden (2890473), Vincent van Denzen (2864817),\
+  Thies van der Aar (2900182), Kian Hendriks (2898447) & Julius Shano (2898227)
 date: "`r Sys.Date()`"
 output:
   pdf_document:
@@ -32,6 +34,7 @@ require(patchwork)
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 \newpage
+
 # Part 1 - Identify a Social Problem
 
 ## 1.1 Describe the Social Problem
@@ -42,6 +45,7 @@ It's striking that this development differs significantly across regions in the 
 
 This project investigates the relationship between regional income growth and house price dynamics in Dutch provinces, based on CBS-data and the programming tool R. The goal is to discover in which regions the housing market detached most from the local income development.
 \newpage
+
 # Part 2 - Data Sourcing
 
 ## 2.1 Load in the data
