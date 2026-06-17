@@ -519,8 +519,8 @@ ggplot(nl_map) +
   ) +
   theme_void() +
   labs(
-    title = "Mean Spendable Income per Province",
-    subtitle = "Average over 2015-2023"
+    title = "Mean Spendable Income per Province (in euro's)",
+    subtitle = "Average between 2015-2023"
   )
 
 
@@ -543,13 +543,13 @@ ggplot(nl_map) +
   scale_fill_distiller(
     palette = "Greens",
     direction = 1,
-    name = "Avg. house price (€)",
+    name = "Avg. house price (in euro's)",
     labels = scales::comma
   ) +
   theme_void() +
   labs(
-    title = "Average House Price per Province",
-    subtitle = "Average over the most recent years"
+    title = "Average House Price per Province (in euro's)",
+    subtitle = "Average between 2015-2023"
   )
 ```
 
