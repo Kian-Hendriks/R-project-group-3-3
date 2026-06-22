@@ -1,7 +1,7 @@
 ---
 title: "Regional Income Growth and House Price Dynamics in the Netherlands"
 author: |
-  Vincent van Boven (2844123), Joris van Elden (2890473), Vincent van Denzen (2864817),\
+  Vincent van Boven (2844123), Joris van Elden (2890473), Vincent van Denzen (2864817),
   Thies van der Aar (2900182), Kian Hendriks (2898447) & Julius Shano (2898227)
 date: "`r Sys.Date()`"
 output:
@@ -335,7 +335,7 @@ head(bevolking_breed)   # View() does not work while knitting
 
 **Variable 1 -- average disposable income per province**
 Our first generated variable is the average disposable household income per province,
-averaged over the years 2015--2023. We created it by aggregating the cleaned income dataset,
+averaged over the years 2015-2023. We created it by aggregating the cleaned income dataset,
 taking the mean disposable income for each province. The result gives one income figure per
 province and serves as a stable benchmark of regional purchasing power, which we later
 compare against house prices.
@@ -382,7 +382,7 @@ write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv",
 
 **Variable 3 -- population density and house price per province**
 The third variable that we created combines population density with the average house price
-for each province per year (2020--2023). We reshaped both the density data and the
+for each province per year (2020-2023). We reshaped both the density data and the
 house-price data to long format and merged them on province and year. This variable lets us
 group the provinces into Randstad versus outside the Randstad and compare their house prices
 (used in section 3.5). We also created a fourth variable, the price-to-income ratio, which
@@ -604,7 +604,7 @@ provinces where most people want or need to live, where housing is least afforda
 
 ## 3.6 Event analysis
 
-For the event analysis we study the relationship between two variables -- average
+For the event analysis we study the relationship between two variables; average
 disposable household income and the average house price around a clear event: the
 turn in mortgage interest rates in 2022. To do this we generate a fourth variable, the
 **price-to-income ratio** (average house price divided by average yearly disposable
@@ -683,7 +683,7 @@ conditions than by regional purchasing power, which means affordability could de
 again quickly if borrowing becomes cheaper.
 
 Several limitations should be kept in mind. The overlapping window in which we have both
-income and house-price data per province is short (2020--2023), so the trends rest on few
+income and house-price data per province is short (2020-2023), so the trends rest on few
 observations and should be read as indicative rather than conclusive. Administrative income
 definitions can change between years, which may affect comparability, and the analysis
 covers only the twelve provinces, so within-province differences (e.g. between cities and
