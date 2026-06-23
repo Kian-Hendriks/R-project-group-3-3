@@ -384,6 +384,50 @@ woningprijsprov_lang$id <- NULL
 write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv", row.names = FALSE)
 ```
 
+```{r build_randstad, include=FALSE}
+# Build the regional dataset (Randstad vs. rest) that feeds the plots in 3.3 and
+# 3.6. We label every province, average income and house price per region per
+# year (2020-2023) and add the year-on-year growth percentages. The house-price
+# columns are stored as text with a '.' decimal mark, so we convert them first.
+randstad_prov <- c("Noord-Holland (PV)", "Zuid-Holland (PV)",
+                   "Utrecht (PV)", "Flevoland (PV)")
+
+ink <- datacombined15tot23goed[datacombined15tot23goed$jaar %in% 2020:2023, ]
+ink$regio <- ifelse(ink$Provincies %in% randstad_prov,
+                    "Randstad (incl. Flevoland)", "Buiten Randstad")
+ink_reg <- aggregate(gem_bstb_inkomen_x_100 ~ jaar + regio, data = ink, FUN = mean)
+ink_reg$gem_bstb_inkomen_euro <- ink_reg$gem_bstb_inkomen_x_100 * 100
+
+hp <- read.csv("goede data/goedehuizenprijsenperprov.csv")
+hp <- hp[!grepl("Bron", hp$Regio.s), ]
+for (col in c("X2020", "X2021", "X2022", "X2023")) hp[[col]] <- as.numeric(hp[[col]])
+hp_long <- reshape(hp[, c("Regio.s", "X2020", "X2021", "X2022", "X2023")],
+                   varying = c("X2020", "X2021", "X2022", "X2023"),
+                   v.names = "gem_huizenprijs", timevar = "jaar",
+                   times = c(2020, 2021, 2022, 2023), direction = "long")
+hp_long$regio <- ifelse(hp_long$Regio.s %in% randstad_prov,
+                        "Randstad (incl. Flevoland)", "Buiten Randstad")
+hp_reg <- aggregate(gem_huizenprijs ~ jaar + regio, data = hp_long, FUN = mean)
+
+randstad_vs_buiten <- merge(ink_reg[, c("jaar", "regio", "gem_bstb_inkomen_euro")],
+                            hp_reg, by = c("jaar", "regio"))
+randstad_vs_buiten <- randstad_vs_buiten[order(randstad_vs_buiten$regio,
+                                               randstad_vs_buiten$jaar), ]
+
+randstad_vs_buiten$inkomensstijging_pct <- ave(
+  randstad_vs_buiten$gem_bstb_inkomen_euro, randstad_vs_buiten$regio,
+  FUN = function(x) round((x / c(NA, head(x, -1)) - 1) * 100, 2))
+randstad_vs_buiten$huizenprijsstijging_pct <- ave(
+  randstad_vs_buiten$gem_huizenprijs, randstad_vs_buiten$regio,
+  FUN = function(x) round((x / c(NA, head(x, -1)) - 1) * 100, 2))
+
+randstad_vs_buiten <- randstad_vs_buiten[, c("jaar", "regio",
+  "gem_bstb_inkomen_euro", "gem_huizenprijs",
+  "inkomensstijging_pct", "huizenprijsstijging_pct")]
+
+write.csv(randstad_vs_buiten, "goede data/randstad_vs_buiten_randstad.csv", row.names = FALSE)
+```
+
 **Variable 3 -- population density and house price per province**
 The third variable that we created combines population density with the average house price
 for each province per year (2020-2023). We reshaped both the density data and the
