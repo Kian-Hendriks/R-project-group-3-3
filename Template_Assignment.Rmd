@@ -16,10 +16,14 @@ output:
 
 
 ```{r package_install, include=FALSE}
-install.packages("tidyverse")
-install.packages("yaml")
-install.packages("rmarkdown")
-install.packages("patchwork")
+# Install only the packages that are not already present, so this does not
+# re-download everything on every knit. A CRAN mirror is set explicitly because
+# the default repository can be unset when knitting non-interactively.
+needed <- c("tidyverse", "rmarkdown", "yaml", "patchwork", "scales", "sf")
+missing <- setdiff(needed, rownames(installed.packages()))
+if (length(missing) > 0) {
+  install.packages(missing, repos = "https://cloud.r-project.org")
+}
 ```
 
 ```{r packages, include=FALSE}
