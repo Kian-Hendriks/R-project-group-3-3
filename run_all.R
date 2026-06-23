@@ -1,17 +1,18 @@
 # run_all.R -- reproduce the full analysis and report from a clean checkout.
 #
 # Steps:
-#   1. Restore the exact package versions recorded in renv.lock.
+#   1. Install any required packages that are missing.
 #   2. Knit the R Markdown report to PDF (Template_Assignment.pdf).
 #
 # Usage (from the project root):
 #   Rscript run_all.R
 
-# 1. Restore the recorded package environment.
-if (!requireNamespace("renv", quietly = TRUE)) {
-  install.packages("renv", repos = "https://cloud.r-project.org")
+# 1. Install missing packages (only those not already present).
+needed <- c("tidyverse", "rmarkdown", "yaml", "patchwork", "scales", "sf")
+missing <- setdiff(needed, rownames(installed.packages()))
+if (length(missing) > 0) {
+  install.packages(missing, repos = "https://cloud.r-project.org")
 }
-renv::restore(prompt = FALSE)
 
 # 2. Render the report.
 rmarkdown::render("Template_Assignment.Rmd", output_format = "pdf_document")
