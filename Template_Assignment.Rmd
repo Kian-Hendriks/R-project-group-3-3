@@ -16,9 +16,7 @@ output:
 
 
 ```{r package_install, include=FALSE}
-# Install only the packages that are not already present, so this does not
-# re-download everything on every knit. A CRAN mirror is set explicitly because
-# the default repository can be unset when knitting non-interactively.
+# install the packages we need if they are not there yet
 needed <- c("tidyverse", "rmarkdown", "yaml", "patchwork", "scales", "sf")
 missing <- setdiff(needed, rownames(installed.packages()))
 if (length(missing) > 0) {
@@ -202,7 +200,7 @@ Density: Compiled from over 50 CBS surveys, with annual figures from 1995 onward
 
 Average House Price: Based on notarial transaction records registered by the Kadaster, combined with WOZ valuations of all homes in the Netherlands. Figures are final immediately upon publication. Revisions only occur in exceptional cases. Note that the average sale price is not the same as the price index and should not be used as an indicator of price development.
 
-Household Income: Based on tax and administrative records for all private households with known income. Figures for 2011–2022 are final; 2023 figures are preliminary. This table has been discontinued and replaced by an updated version.
+Household Income: Based on tax and administrative records for all private households with known income. Figures for 2011-2022 are final; 2023 figures are preliminary. This table has been discontinued and replaced by an updated version.
 
 ## 2.3 Describe the type of variables included
 
@@ -297,10 +295,8 @@ write.csv(bevolkingsdichtheid, "goede data/goede_bevolkingsdichtheid.csv", row.n
 ```{r include=FALSE}
 library(tidyverse)
 
-# The CBS file is in 'wide' format and has 6 header rows: a title, 2 blank
-# lines, 'Onderwerp', the province names (row 5) and the unit (row 6). The
-# actual data only start on row 7. We therefore read it without a header and
-# build a long table ourselves with the columns Perioden / Regio.s / density.
+# the CBS file has some extra rows on top, so we read it without a header
+# and build a long table ourselves
 ruw <- read.csv(
   "data/regionale_kerncijfers.csv",
   sep = ";",
@@ -337,7 +333,7 @@ head(bevolking_breed)   # View() does not work while knitting
 
 ## 3.2 Generate necessary variables
 
-**Variable 1 -- average disposable income per province**
+**Variable 1: average disposable income per province**
 Our first generated variable is the average disposable household income per province,
 averaged over the years 2015-2023. We created it by aggregating the cleaned income dataset,
 taking the mean disposable income for each province. The result gives one income figure per
@@ -357,7 +353,7 @@ colnames(gem_inkomen_provincie)[colnames(gem_inkomen_provincie) == "gem_bstb_ink
 write.csv(gem_inkomen_provincie, "goede data/gem_inkomen_provincie.csv", row.names = FALSE)
 ```
 
-**Variable 2 -- Randstad versus outside the Randstad**
+**Variable 2: Randstad versus outside the Randstad**
 For the second variable we grouped the provinces into two regions, the Randstad (including
 Flevoland) and the rest of the country, and computed the average income and average house
 price for each region per year. This required reshaping the house-price dataset from wide
@@ -385,10 +381,8 @@ write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv",
 ```
 
 ```{r build_randstad, include=FALSE}
-# Build the regional dataset (Randstad vs. rest) that feeds the plots in 3.3 and
-# 3.6. We label every province, average income and house price per region per
-# year (2020-2023) and add the year-on-year growth percentages. The house-price
-# columns are stored as text with a '.' decimal mark, so we convert them first.
+# make the Randstad vs rest dataset used in 3.3 and 3.6:
+# average income and house price per region per year, plus the growth in %
 randstad_prov <- c("Noord-Holland (PV)", "Zuid-Holland (PV)",
                    "Utrecht (PV)", "Flevoland (PV)")
 
@@ -428,7 +422,7 @@ randstad_vs_buiten <- randstad_vs_buiten[, c("jaar", "regio",
 write.csv(randstad_vs_buiten, "goede data/randstad_vs_buiten_randstad.csv", row.names = FALSE)
 ```
 
-**Variable 3 -- population density and house price per province**
+**Variable 3: population density and house price per province**
 The third variable that we created combines population density with the average house price
 for each province per year (2020-2023). We reshaped both the density data and the
 house-price data to long format and merged them on province and year. This variable lets us
@@ -663,9 +657,8 @@ country, with the 2022 event marked.
 ```{r analysis, message=FALSE, warning=FALSE}
 library(tidyverse)
 
-# New variable (variable 4): price-to-income ratio = average house price (in euro)
-# divided by the average yearly disposable income (in euro). We use the regional
-# dataset, which already contains both income (in euro) and the house price (x1000 euro).
+# variable 4: price-to-income ratio = house price / yearly income
+# (the regional dataset already has both)
 ratio_data <- read.csv("goede data/randstad_vs_buiten_randstad.csv",
                        stringsAsFactors = FALSE)
 

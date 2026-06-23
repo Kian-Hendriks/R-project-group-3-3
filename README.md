@@ -3,7 +3,7 @@
 Group project for *Programming for Economics* (Vrije Universiteit Amsterdam).
 We use R to collect, clean, analyse and visualise public CBS data in order to
 quantify a social problem: the growing gap between regional house prices and
-household income across the twelve Dutch provinces (2015–2023).
+household income across the twelve Dutch provinces (2015-2023).
 
 The full analysis and write-up live in [`Template_Assignment.Rmd`](Template_Assignment.Rmd),
 which knits to `Template_Assignment.pdf`.
@@ -37,13 +37,13 @@ downloads. To re-download the originals:
 
 | Dataset | What it contains | CBS table | Download |
 |---|---|---|---|
-| Household income | Average disposable household income per province, 2015–2023 | `86004NED` | <https://opendata.cbs.nl/#/CBS/nl/dataset/86004NED/table> |
+| Household income | Average disposable household income per province, 2015-2023 | `86004NED` | <https://opendata.cbs.nl/#/CBS/nl/dataset/86004NED/table> |
 | House prices | Average sale price of existing owner-occupied homes per province | `85773NED` | <https://opendata.cbs.nl/#/CBS/nl/dataset/85773NED/table> |
 | Population density | Inhabitants per km² per province | `70072ned` | <https://opendata.cbs.nl/#/CBS/nl/dataset/70072ned/table> |
 
-**Download steps (per table):** open the link → select the region level
-*Provincie (PV)* and the years 2015–2023 → export as CSV → save into `data/`
-(income files as `data2015.csv` … `data2023.csv`, density as
+**Download steps (per table):** open the link, select the region level
+*Provincie (PV)* and the years 2015-2023, export as CSV and save into `data/`
+(income files as `data2015.csv` ... `data2023.csv`, density as
 `regionale_kerncijfers.csv`).
 
 ## Repository structure
