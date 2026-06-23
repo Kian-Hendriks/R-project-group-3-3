@@ -20,9 +20,10 @@ From the project root, run:
 Rscript run_all.R
 ```
 
-This restores the exact package versions from `renv.lock` and knits the report
-to PDF. Alternatively, open `ProgrForEconom.Rproj` in RStudio, run
-`renv::restore()`, and knit `Template_Assignment.Rmd`.
+This installs any missing packages and knits the report to PDF. The package
+versions we used are listed in `renv.lock`. Alternatively, open
+`ProgrForEconom.Rproj` in RStudio, run `renv::restore()`, and knit
+`Template_Assignment.Rmd`.
 
 > Note: the map in section 3.4 downloads province boundaries from a public
 > GeoJSON URL, so an internet connection is needed for that one figure.
