@@ -386,11 +386,10 @@ write.csv(woningprijsprov_lang, "goede data/goedehuizenprijsenperprov_lang.csv",
 
 **Variable 3 -- population density and house price per province**
 The third variable that we created combines population density with the average house price
-for each province per year (2020-2023). We reshaped both the density data and the
+for each province per year (2020-2022). We reshaped both the density data and the
 house-price data to long format and merged them on province and year. This variable lets us
 group the provinces into Randstad versus outside the Randstad and compare their house prices
-(used in section 3.5). We also created a fourth variable, the price-to-income ratio, which
-you can see later in the assignment (section 3.6).
+(used in section 3.5). We also created a fourth variable, the price-to-income ratio, which is discussed in section 3.6.
 
 ```{r}
 bevolkingsdichtheid_raw <- read.csv("goede data/goede_bevolkingsdichtheid.csv", header = FALSE)
