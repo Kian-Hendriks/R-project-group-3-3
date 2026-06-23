@@ -1,8 +1,8 @@
 ---
 title: "Regional Income Growth and House Price Dynamics in the Netherlands"
 author: |
-  Vincent van Boven (2844123), Joris van Elden (2890473), Vincent van Denzen (2864817),
-  Thies van der Aar (2900182), Kian Hendriks (2898447) & Julius Shano (2898227)
+  | Vincent van Boven (2844123), Joris van Elden (2890473), Vincent van Denzen (2864817),
+  | Thies van der Aar (2900182), Kian Hendriks (2898447) & Julius Shano (2898227)
 date: "`r Sys.Date()`"
 output:
   pdf_document:
